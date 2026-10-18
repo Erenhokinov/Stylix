@@ -1,0 +1,5 @@
+{ ... }:
+
+{
+  hardware.uinput.enable = true;
+}
