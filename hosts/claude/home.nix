@@ -1,8 +1,8 @@
 { config, lib, pkgs, inputs, ... }:
 
 let
-  transkun = pkgs.callPackage /etc/nixos/pkgs/transkun.nix { };
-  humidi = pkgs.callPackage /etc/nixos/pkgs/humidi.nix { };
+  transkun = pkgs.callPackage /home/claude/stylix/pkgs/transkun.nix { };
+  humidi = pkgs.callPackage /home/claude/stylix/pkgs/humidi.nix { };
 in
 {
   imports = [
@@ -55,7 +55,7 @@ in
     };
 
     home.packages = [
-      transkun
+     transkun
       humidi
       pkgs.sox
     ];

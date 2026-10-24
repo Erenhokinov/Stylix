@@ -27,10 +27,10 @@ in
 
   config = lib.mkIf cfg.enable {
     userSettings.alacritty.enable = true;
-    programs.alacritty.settings.window.opacity = lib.mkOverride 40 (if performance then 1.0 else 0.80);
+    programs.alacritty.settings.window.opacity = lib.mkOverride 40 (if performance then 1.0 else 0.73);
     userSettings.kitty.enable = true;
     programs.kitty.settings.background_opacity = lib.mkOverride 40 (
-      if performance then "1.0" else "0.80"
+      if performance then "1.0" else "0.73"
     );
     userSettings.emacs.opacity = lib.mkOverride 40 (if performance then 100 else 80);
     userSettings.dmenuScripts = {
@@ -95,7 +95,7 @@ in
 
     wayland.windowManager.hyprland = {
       enable = true;
-      package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
       plugins = [ ];
       settings = {
         env = [
@@ -294,8 +294,6 @@ in
           "SUPER,N,togglespecialworkspace,scratch_numbat"
           ''SUPER,B,exec,if hyprctl clients | grep scratch_btm; then echo "scratch_yazi respawn not needed"; else alacritty --class scratch_btm -e btm; fi''
           "SUPER,B,togglespecialworkspace,scratch_btm"
-          ''SUPER,D,exec,if hyprctl clients | grep Element; then echo "scratch_chat respawn not needed"; else element-desktop; fi''
-          "SUPER,D,togglespecialworkspace,scratch_chat"
           ''SUPER,equal, exec, hyprctl keyword cursor:zoom_factor "$(hyprctl getoption cursor:zoom_factor | grep float | awk '{print $2 + 0.5}')"''
           ''SUPER,minus, exec, hyprctl keyword cursor:zoom_factor "$(hyprctl getoption cursor:zoom_factor | grep float | awk '{print $2 - 0.5}')"''
           "SUPER,I,exec,networkmanager_dmenu"
@@ -395,13 +393,13 @@ in
         ++ lib.optionals (!performance) [
           "opacity 0.80,class:^(dev.zed.Zed)$"
           "opacity 0.80,class:^(org.pulseaudio.pavucontrol)$"
-          "opacity 1.0,class:^(org.qutebrowser.qutebrowser),fullscreen:1"
+          "opacity 0,73,class:^(org.qutebrowser.qutebrowser),fullscreen:1"
           "opacity 0.80,class:^(Element)$"
-          "opacity 0.80,class:^(discord)$"
+          "opacity 0.73,class:^(Vesktop)$"
           "opacity 0.80,class:^(Logseq)$"
-          "opacity 1.0,class:^(Brave-browser),fullscreen:1"
+          "opacity 0,73,class:^(Brave-browser),fullscreen:1"
           "opacity 1.0,class:^(librewolf),fullscreen:1"
-          "opacity 0.80,title:^(My Local Dashboard Awesome Homepage - qutebrowser)$"
+          "opacity 0.73,title:^(My Local Dashboard Awesome Homepage - qutebrowser)$"
           "opacity 0.80,title:\[.*\] - My Local Dashboard Awesome Homepage"
           "opacity 0.80,class:^(org.keepassxc.KeePassXC)$"
           "opacity 0.80,class:^(org.gnome.Nautilus)$"
@@ -546,7 +544,7 @@ in
         wl-clipboard
         hyprland-protocols
         hyprpicker
-        inputs.hyprlock.packages.${pkgs.system}.default
+        inputs.hyprlock.packages.${pkgs.stdenv.hostPlatform.system}.default
         hypridle
         hyprpaper
         fnott
