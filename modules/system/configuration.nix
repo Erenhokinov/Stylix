@@ -6,7 +6,6 @@
     environment.systemPackages = with pkgs; [
     git
     vesktop
-    windsurf
     materialgram
     osu-lazer-bin
     inputs.prismlauncher-cracked.packages.${pkgs.stdenv.hostPlatform.system}.prismlauncher

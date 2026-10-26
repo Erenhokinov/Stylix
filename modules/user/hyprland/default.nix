@@ -393,11 +393,11 @@ in
         ++ lib.optionals (!performance) [
           "opacity 0.80,class:^(dev.zed.Zed)$"
           "opacity 0.80,class:^(org.pulseaudio.pavucontrol)$"
-          "opacity 0,73,class:^(org.qutebrowser.qutebrowser),fullscreen:1"
+          "opacity 0.73,class:^(org.qutebrowser.qutebrowser),fullscreen:1"
           "opacity 0.80,class:^(Element)$"
           "opacity 0.73,class:^(Vesktop)$"
           "opacity 0.80,class:^(Logseq)$"
-          "opacity 0,73,class:^(Brave-browser),fullscreen:1"
+          "opacity 0.73,class:^(Brave-browser),fullscreen:1"
           "opacity 1.0,class:^(librewolf),fullscreen:1"
           "opacity 0.73,title:^(My Local Dashboard Awesome Homepage - qutebrowser)$"
           "opacity 0.80,title:\[.*\] - My Local Dashboard Awesome Homepage"

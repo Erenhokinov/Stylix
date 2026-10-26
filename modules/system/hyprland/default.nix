@@ -18,7 +18,7 @@ in
 
   config = lib.mkIf cfg.enable {
     # Power key should not shut off computer by defaultPower key shuts of
-    services.logind.powerKey = "suspend";
+    services.logind.settings.Login.HandlePowerKey = "suspend";
 
     # Hyprland
     programs = {
@@ -48,7 +48,7 @@ in
     ];
 
     # Display manager
-    services.xserver.displayManager.sddm = {
+    services.displayManager.sddm = {
       enable = true;
       wayland.enable = true;
       enableHidpi = true;

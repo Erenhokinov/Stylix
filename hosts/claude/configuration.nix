@@ -34,7 +34,7 @@
       security = {
         automount.enable = true;
         blocklist.enable = true;
-        doas.enable = true;
+        doas.enable = false;
         firejail.enable = false; # TODO setup firejail profiles
         firewall.enable = true;
         gpg.enable = true;
@@ -45,7 +45,7 @@
       # style
       stylix = {
         enable = true;
-        theme = "uwunicorn";
+        theme = "ember";
       };
     };
 
@@ -86,6 +86,17 @@
       swapDevices = 1;
       algorithm = "zstd";
     };
+
+
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [ 
+    libGL
+    xorg.libX11
+    xorg.libXext
+    xorg.libXfixes
+    ];
+  };
 
     nixpkgs.config.allowUnfree = true;
     hardware.firmware = [

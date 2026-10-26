@@ -1,7 +1,8 @@
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, roblox, pkgs, inputs, ... }:
 
 let
   transkun = pkgs.callPackage /home/claude/stylix/pkgs/transkun.nix { };
+  romannow = pkgs.callPackage /home/claude/stylix/pkgs/Romanich.nix { };
   humidi = pkgs.callPackage /home/claude/stylix/pkgs/humidi.nix { };
 in
 {
@@ -56,7 +57,9 @@ in
 
     home.packages = [
      transkun
+      romannow
       humidi
+      roblox.packages.x86_64-linux.default
       pkgs.sox
     ];
 
@@ -68,9 +71,14 @@ in
         enabledExtensions = with spicePkgs.extensions; [
           adblockify
           hidePodcasts
+          fullAppDisplay
+          autoVolume
+          copyToClipboard
+          history
+          playNext
         ];
-        theme = spicePkgs.themes.nightlight;
-        colorScheme = "Nightlight Colors";
+        theme = spicePkgs.themes.burntSienna;
+        colorScheme = "Base";
       };
 
     services.wayvibes = {
