@@ -6,6 +6,7 @@
     environment.systemPackages = with pkgs; [
     git
     vesktop
+    materialgram
     osu-lazer-bin
     inputs.prismlauncher-cracked.packages.${pkgs.stdenv.hostPlatform.system}.prismlauncher
     ydotool
