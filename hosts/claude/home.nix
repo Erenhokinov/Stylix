@@ -1,4 +1,4 @@
-{ config, lib, roblox, pkgs, inputs, ... }:
+{ config, lib, pkgs, nix-flatpak, inputs, ... }:
 
 let
   transkun = pkgs.callPackage /home/claude/stylix/pkgs/transkun.nix { };
@@ -7,6 +7,7 @@ let
 in
 {
   imports = [
+    inputs.nix-flatpak.homeManagerModules.nix-flatpak
     inputs.spicetify-nix.homeManagerModules.default
     inputs.wayvibes.nixosModules.default
   ];
@@ -29,7 +30,7 @@ in
       git.enable = true;
       engineering.enable = false;
       art.enable = false;
-      flatpak.enable = true;
+      flatpak.enable = false;
       godot.enable = false;
       keepass.enable = false;
       media.enable = false;
@@ -59,8 +60,12 @@ in
      transkun
       romannow
       humidi
-      roblox.packages.x86_64-linux.default
       pkgs.sox
+    ];
+    services.flatpak.update.onActivation = true;
+    services.flatpak.packages = [
+    { appId = "org.vinegarhq.Sober"; origin = "flathub";  }
+    #tralalelo tralala!
     ];
 
     programs.spicetify =
@@ -77,8 +82,8 @@ in
           history
           playNext
         ];
-        theme = spicePkgs.themes.burntSienna;
-        colorScheme = "Base";
+        theme = spicePkgs.themes.retroBlur;
+        colorScheme = "purple";
       };
 
     services.wayvibes = {

@@ -2,7 +2,7 @@
   description = "Flake of LibrePhoenix";
 
   outputs =
-    inputs@{ self, roblox, ... }:
+    inputs@{ self, nix-flatpak, ... }:
     let
       system = "x86_64-linux";
 
@@ -75,8 +75,8 @@
                 home-manager.extraSpecialArgs = {
                   inherit pkgs;
                   inherit pkgs-stable;
+		  inherit nix-flatpak;
                   inherit inputs;
-		  inherit roblox;
                 };
               }
 
@@ -98,8 +98,9 @@
     chaotic.url = "github:chaotic-cx/nyx";
     prismlauncher-cracked.url = "github:Diegiwg/PrismLauncher-Cracked";
     wayvibes.url = "github:sahaj-b/wayvibes";
-    roblox.url = "github:CoderDayton/nightcap";
+    nix-devin-cli.url = "github:broady/nix-devin-cli";
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
     wayvibes.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";

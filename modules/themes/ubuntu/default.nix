@@ -1,11 +1,11 @@
 {
   scheme = "Ubuntu";
   slug = "ubuntu";
-  author = "Based on https://design.ubuntu.com/brand/colour-palette, adapted to base16 by librephoenix (https://github.com/librephoenix)";;
+  author = "Based on https://design.ubuntu.com/brand/colour-palette, adapted to base16 by librephoenix (https://github.com/librephoenix)";
   description = "Orange and purple color scheme based on the Ubuntu brand colors";
   polarity = "dark";
   backgroundUrl = "https://images.hdqwalls.com/download/sea-of-dreamscape-r4-1920x1080.jpg";
-  backgroundSha256 = "sha256-5TPwZAQekK1Aq2YdomcJ0irGmIXVPUpgxRwuEetthYw=";
+  backgroundSha256 = "sha256-W2v1uQngxqcQ+xBSTRxo7blKzgaL1pW06E6n0vP2Z88=";
   base00 = "2C001E";
   base01 = "411934";
   base02 = "56334B";
