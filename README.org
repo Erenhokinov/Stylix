@@ -1,9 +1,0 @@
-#+title: Stylix.
-#+author: Erenhokinov
-
-** What is this repository?
-These are my dotfiles (configuration files) for my NixOS setup(s).
-
-Here is my main setup:
-[[desktop.png]]
-
