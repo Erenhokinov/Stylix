@@ -1,5 +1,4 @@
 { config, lib, pkgs, pkgs-stable, ...}:
-
 let
   cfg = config.userSettings.ai;
 in {
@@ -18,5 +17,6 @@ in {
                         local-ai &> /dev/null & disown;
                         popd;'')
                     ];
+		    nixpkgs.config.allowBroken = true;
   };
 }

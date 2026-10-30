@@ -6,4 +6,4 @@ These are my dotfiles (configuration files) for my NixOS setup(s).
 
 Here is my main setup:
 [[desktop.png]]
-
+Rebuild command is: sudo nixos-rebuild switch --flake .#claude -L --impure.

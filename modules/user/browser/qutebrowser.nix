@@ -234,23 +234,7 @@ c.url.default_page = str(config.configdir)+'/qute-home.html'
 c.url.start_pages = str(config.configdir)+'/qute-home.html'
 
 c.url.searchengines = {'DEFAULT': 'https://search.brave.com/search?q={}&source=web',
-                       'sp': 'https://startpage.com/do/search?query={}',
-                       'd'      : 'https://duckduckgo.com/?q={}&ia=web',
-                       'az'     : 'https://www.amazon.com/s?k={}',
-                       'aw'     : 'https://wiki.archlinux.org/index.php?search={}&title=Special%3ASearch&wprov=acrw1',
-                       'nw'     : 'https://nixos.wiki/index.php?search={}&go=Go',
-                       'mn'     : 'https://mynixos.com/search?q={}',
-                       'sb'     : 'https://www.serebii.net/search.shtml?q={}&sa=Search',
-                       'bp'     : 'https://bulbapedia.bulbagarden.net/wiki/index.php?title=Special%3ASearch&search={}&go=Go',
                        'yt'     : 'https://www.youtube.com/results?search_query={}',
-                       'od'     : 'https://odysee.com/$/search?q={}',
-                       'gd'     : 'https://drive.google.com/drive/search?q={}',
-                       'gh'     : 'https://github.com/search?q={}&type=repositories',
-                       'gl'     : 'https://gitlab.com/search?search={}&nav_source=navbar',
-                       'np'     : 'https://github.com/search?q=repo%3ANixOS%2Fnixpkgs%20{}&type=code',
-                       'wk'     : 'https://en.wikipedia.org/w/index.php?fulltext=1&search={}&title=Special%3ASearch&ns0=1',
-                       'th'     : 'https://www.thingiverse.com/search?q={}&page=1',
-                       'dh'     : 'https://hub.docker.com/search?q={}'
                       }
 
 config.set('completion.open_categories',["searchengines","quickmarks","bookmarks"])
@@ -258,7 +242,7 @@ config.set('completion.open_categories',["searchengines","quickmarks","bookmarks
 config.set('downloads.location.directory', '~/Downloads')
 config.set('downloads.location.prompt', False)
 config.set('downloads.position', 'bottom')
-config.set('downloads.remove_finished', 5000)
+config.set('downloads.remove_finished', 10000)
 
 config.set('fileselect.handler', 'external')
 config.set('fileselect.single_file.command', ['kitty','--class','filechoose_yazi','-e','yazi','--chooser-file={}'])

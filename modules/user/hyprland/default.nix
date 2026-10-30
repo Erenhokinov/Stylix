@@ -48,7 +48,7 @@ in
       XDG_SESSION_TYPE = "wayland";
       GDK_BACKEND = "wayland,x11,*";
       QT_QPA_PLATFORM = "wayland;xcb";
-      #QT_QPA_PLATFORMTHEME = lib.mkForce "qt5ct";
+      QT_QPA_PLATFORMTHEME = lib.mkForce "Fusion";
       QT_AUTO_SCREEN_SCALE_FACTOR = "1.25";
       QT_WAYLAND_DISABLE_WINDOWDECORATION = 1;
       CLUTTER_BACKEND = "wayland";
@@ -236,6 +236,7 @@ in
           "SUPERSHIFT,T,exec,screenshot-ocr"
           "CTRLALT,Delete,exec,hyprctl kill"
           "SUPERSHIFT,K,exec,hyprctl kill"
+	  "SUPER,D,exec,vesktop"
           "SUPER,R,pass,^(com\.obsproject\.Studio)$"
           "SUPERSHIFT,R,pass,^(com\.obsproject\.Studio)$"
           "SUPER,RETURN,exec,${term}"
@@ -357,10 +358,10 @@ in
           "size 85% 90%,class:^(Element)$"
           "workspace special:scratch_chat silent,class:^(Element)$"
           "center,class:^(Element)$"
-          "float,class:^(discord)$"
-          "size 85% 90%,class:^(discord)$"
-          "workspace special:scratch_chat silent,class:^(discord)$"
-          "center,class:^(discord)$"
+          "float,class:^(vesktop)$"
+          "size 85% 90%,class:^(vesktop)$"
+          "workspace special:scratch_chat silent,class:^(vesktop)$"
+          "center,class:^(vesktop)$"
           "float,title:^(Save to Disk)$"
           "size 70% 75%,title:^(Save to Disk)$"
           "center,title:^(Save to Disk)$"
@@ -395,7 +396,7 @@ in
           "opacity 0.80,class:^(org.pulseaudio.pavucontrol)$"
           "opacity 0.73,class:^(org.qutebrowser.qutebrowser),fullscreen:1"
           "opacity 0.80,class:^(Element)$"
-          "opacity 0.73,class:^(Vesktop)$"
+          "opacity 0.73,class:^(vesktop)$"
           "opacity 0.80,class:^(Logseq)$"
           "opacity 0.73,class:^(Brave-browser),fullscreen:1"
           "opacity 1.0,class:^(librewolf),fullscreen:1"
@@ -711,11 +712,6 @@ in
       listener {
         timeout = 165 # in seconds
         on-timeout = loginctl lock-session
-      }
-      listener {
-        timeout = 180 # in seconds
-        on-timeout = systemctl suspend
-        on-resume = hyprctl dispatch dpms on
       }
     '';
     home.file.".config/hypr/hyprlock.conf".text = ''

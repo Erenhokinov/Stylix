@@ -99,6 +99,7 @@
   };
 
     nixpkgs.config.allowUnfree = true;
+
     hardware.firmware = [
       (pkgs.runCommand "100hz-edid" {} ''
         mkdir -p $out/lib/firmware/edid
