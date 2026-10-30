@@ -61,6 +61,7 @@ in
       romannow
       humidi
       pkgs.sox
+      pkgs.deepseek-harness
     ];
     services.flatpak.update.onActivation = true;
     services.flatpak.packages = [
