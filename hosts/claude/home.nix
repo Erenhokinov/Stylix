@@ -2,6 +2,7 @@
 
 let
   transkun = pkgs.callPackage /home/claude/stylix/pkgs/transkun.nix { };
+  browsecode = pkgs.callPackage /home/claude/stylix/pkgs/browsecode.nix { };
   romannow = pkgs.callPackage /home/claude/stylix/pkgs/Romanich.nix { };
   humidi = pkgs.callPackage /home/claude/stylix/pkgs/humidi.nix { };
 in
@@ -58,6 +59,7 @@ in
 
     home.packages = [
      transkun
+     browsecode
       romannow
       humidi
       pkgs.sox
@@ -83,13 +85,13 @@ in
           history
           playNext
         ];
-        theme = spicePkgs.themes.retroBlur;
-        colorScheme = "purple";
+        theme = spicePkgs.themes.catppuccin;
+        colorScheme = "latte";
       };
 
     services.wayvibes = {
       enable = true;
-      soundpack = "${inputs.wayvibes}/soundpacks/akko_lavender_purples";
+      soundpack = "${inputs.wayvibes}/soundpacks/cherrymx-black-pbt";
       volume = 1;
     };
 

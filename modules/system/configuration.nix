@@ -6,9 +6,11 @@
     environment.systemPackages = with pkgs; [
     git
     materialgram
+    chromium
     ffmpeg
     inputs.nix-devin-cli.packages.${stdenv.hostPlatform.system}.default
     vesktop
+    uv
     (pkgs.mpv.override {
       scripts = with pkgs.mpvScripts; [
         uosc

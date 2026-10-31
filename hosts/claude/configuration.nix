@@ -45,7 +45,7 @@
       # style
       stylix = {
         enable = true;
-        theme = "ubuntu";
+        theme = "solarized-light";
       };
     };
 
