@@ -6,17 +6,9 @@
     environment.systemPackages = with pkgs; [
     git
     materialgram
-    chromium
     ffmpeg
     inputs.nix-devin-cli.packages.${stdenv.hostPlatform.system}.default
     vesktop
-    uv
-    (pkgs.mpv.override {
-      scripts = with pkgs.mpvScripts; [
-        uosc
-        sponsorblock
-      ];
-    })
     osu-lazer-bin
     inputs.prismlauncher-cracked.packages.${pkgs.stdenv.hostPlatform.system}.prismlauncher
     ydotool
@@ -27,7 +19,7 @@
     services.journald.rateLimitInterval = "30s";
 
     # Locale and TZ
-    time.timeZone = "Europe/Moscow";
+    time.timeZone = "Europe/Kyiv";
     services.timesyncd.enable = true;
     i18n.defaultLocale = "en_US.UTF-8";
     i18n.extraLocaleSettings = {

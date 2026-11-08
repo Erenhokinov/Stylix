@@ -24,7 +24,9 @@
           createHome = true;
         };
       }) config.systemSettings.users);
-
+services.udev.extraRules = ''
+  KERNEL=="uinput", GROUP="uinput", MODE="0660"
+'';
     home-manager.users = builtins.listToAttrs
       (map (user: {
         name = user;

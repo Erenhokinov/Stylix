@@ -819,11 +819,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1793082406,
-        "narHash": "sha256-7V/UEMn+6ursZtpsiKMv2pmq15HAjGq3stmhiQ5M4To=",
+        "lastModified": 1794118532,
+        "narHash": "sha256-wmvy3M1+k/h50ceuW3s1TEnCXQuahtJOubL01vCcLxY=",
         "owner": "broady",
         "repo": "nix-devin-cli",
-        "rev": "e7f2d80de8abb38c76e09e157abc2ad9c0ae557f",
+        "rev": "d264f331d5517e3e5f8f1536670e8d0f578a673e",
         "type": "github"
       },
       "original": {

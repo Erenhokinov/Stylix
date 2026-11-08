@@ -394,7 +394,7 @@ in
         ++ lib.optionals (!performance) [
           "opacity 0.80,class:^(dev.zed.Zed)$"
           "opacity 0.80,class:^(org.pulseaudio.pavucontrol)$"
-          "opacity 0.73,class:^(org.qutebrowser.qutebrowser),fullscreen:1"
+          "opacity 1.0,class:^(org.qutebrowser.qutebrowser),fullscreen:1"
           "opacity 0.80,class:^(Element)$"
           "opacity 0.73,class:^(vesktop)$"
           "opacity 0.80,class:^(Logseq)$"

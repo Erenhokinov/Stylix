@@ -20,7 +20,7 @@
       gaming.enable = false;
       virtualization = {
         docker.enable = false;
-        virtualMachines.enable = false;
+        virtualMachines.enable = true;
       };
       brave.enable = false;
 
@@ -45,7 +45,7 @@
       # style
       stylix = {
         enable = true;
-        theme = "solarized-light";
+        theme = "atelier-lakeside";
       };
     };
 
@@ -94,6 +94,11 @@
     libGL
     xorg.libX11
     xorg.libXext
+    stdenv.cc.cc.lib
+    zlib
+    openssl
+    libffi
+    glibc
     xorg.libXfixes
     ];
   };
@@ -107,6 +112,7 @@
       '')
     ];
 
+    boot.supportedFilesystems =  ["ntfs"];
     boot.kernelParams = [
       "drm.edid_firmware=eDP-1:edid/100hz.bin"
       "usbhid.mousepoll=1"

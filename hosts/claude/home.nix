@@ -2,7 +2,6 @@
 
 let
   transkun = pkgs.callPackage /home/claude/stylix/pkgs/transkun.nix { };
-  browsecode = pkgs.callPackage /home/claude/stylix/pkgs/browsecode.nix { };
   romannow = pkgs.callPackage /home/claude/stylix/pkgs/Romanich.nix { };
   humidi = pkgs.callPackage /home/claude/stylix/pkgs/humidi.nix { };
 in
@@ -59,7 +58,6 @@ in
 
     home.packages = [
      transkun
-     browsecode
       romannow
       humidi
       pkgs.sox
@@ -86,7 +84,7 @@ in
           playNext
         ];
         theme = spicePkgs.themes.catppuccin;
-        colorScheme = "latte";
+        colorScheme = "frappe";
       };
 
     services.wayvibes = {
