@@ -28,7 +28,6 @@ in
       # adwaita-icon-theme
       # nixos-background-info
       gnome-backgrounds
-      # gnome-bluetooth
       # gnome-color-manager
       # gnome-control-center
       # gnome-shell-extensions

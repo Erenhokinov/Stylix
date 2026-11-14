@@ -96,18 +96,6 @@ in {
       ];
     };
     chaotic.hdr.enable = true;
-    systemSettings.bluetooth.enable = true;
-    hardware.bluetooth = {
-      enable = true;
-      powerOnBoot = true;
-      settings.General = {
-        experimental = true;
-        Privacy = "device";
-        JustWorksRepairing = "always";
-        Class = "0x000100";
-        FastConnectable = true;
-      };
-    };
     # FIXME https://github.com/NixOS/nixpkgs/issues/378447
     hardware.xone.enable = true;
     #hardware.xpadneo.enable = true;
@@ -115,9 +103,6 @@ in {
       # FIXME https://github.com/NixOS/nixpkgs/issues/378447
       extraModulePackages = with config.boot.kernelPackages; [ xone ];
       #extraModulePackages = with config.boot.kernelPackages; [ xpadneo ];
-      extraModprobeConfig = ''
-        options bluetooth disable_ertm=Y
-      '';
     };
     users.groups = {
       steam = {

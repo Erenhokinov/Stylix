@@ -1,9 +1,9 @@
 { config, lib, pkgs, nix-flatpak, inputs, ... }:
 
 let
-  transkun = pkgs.callPackage /home/claude/stylix/pkgs/transkun.nix { };
-#  romannow = pkgs.callPackage /home/claude/stylix/pkgs/Romanich.nix { };
-  humidi = pkgs.callPackage /home/claude/stylix/pkgs/humidi.nix { };
+  transkun = pkgs.callPackage ../../pkgs/transkun.nix { };
+#  romannow = pkgs.callPackage ../../pkgs/Romanich.nix { };
+  humidi = pkgs.callPackage ../../pkgs/humidi.nix { };
 in
 {
   imports = [
@@ -48,8 +48,6 @@ in
       # style
       stylix.enable = true;
 
-      # hardware
-      bluetooth.enable = true;
     };
 
     home.sessionVariables = lib.mkIf config.userSettings.hyprland.enable {

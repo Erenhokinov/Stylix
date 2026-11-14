@@ -115,7 +115,6 @@ in
           "sleep 5 && libinput-gestures"
           "obs-notification-mute-daemon"
           "alacritty --class scratch_term"
-          "blueman-applet"
           "kitty --class scratch_yazi -e yazi"
           "alacritty --class scratch_numbat -e numbat"
           "alacritty --class scratch_btm -e btm"
@@ -685,7 +684,6 @@ in
       audio_sources_more_cmd = "pavucontrol -t 4"
       wifi_more_cmd = "nm-connection-editor"
       vpn_more_cmd = "nm-connection-editor"
-      bluetooth_more_cmd = "blueman-manager"
       [appearance]
       scale_factor = 1.25
       style = "Solid"
