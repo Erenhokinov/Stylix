@@ -6,11 +6,11 @@
     environment.systemPackages = with pkgs; [
     git
     materialgram
-    ffmpeg
     inputs.nix-devin-cli.packages.${stdenv.hostPlatform.system}.default
-    vesktop
     osu-lazer-bin
     inputs.prismlauncher-cracked.packages.${pkgs.stdenv.hostPlatform.system}.prismlauncher
+    vesktop
+    ffmpeg
     ydotool
   ];
     # Journal

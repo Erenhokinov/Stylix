@@ -2,7 +2,7 @@
 
 let
   transkun = pkgs.callPackage /home/claude/stylix/pkgs/transkun.nix { };
-  romannow = pkgs.callPackage /home/claude/stylix/pkgs/Romanich.nix { };
+#  romannow = pkgs.callPackage /home/claude/stylix/pkgs/Romanich.nix { };
   humidi = pkgs.callPackage /home/claude/stylix/pkgs/humidi.nix { };
 in
 {
@@ -57,8 +57,8 @@ in
     };
 
     home.packages = [
-     transkun
-      romannow
+      transkun
+ #     romannow
       humidi
       pkgs.sox
     ];
@@ -77,14 +77,12 @@ in
         enabledExtensions = with spicePkgs.extensions; [
           adblockify
           hidePodcasts
-          fullAppDisplay
           autoVolume
           copyToClipboard
           history
-          playNext
         ];
-        theme = spicePkgs.themes.catppuccin;
-        colorScheme = "frappe";
+        theme = spicePkgs.themes.dribbblish;
+        colorScheme = "purple";
       };
 
     services.wayvibes = {

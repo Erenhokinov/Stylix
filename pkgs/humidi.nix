@@ -11,13 +11,13 @@ let
   ]);
 
   src = fetchurl {
-    url = "https://raw.githubusercontent.com/Erenhokinov/Just-a-minute/main/HuMidi-ydotool-patched-midi.zip";
-    hash = "sha256-bcnnLtLfjZRV0jxrV8E4X4t4zTvL1tRMlvgazLhh/IY=";
+    url = "https://github.com/Erenhokinov/Just-a-minute/raw/main/HuMidi-ydotool-patched-midi-sostenuto.zip";
+    hash = "sha256-fqJF84OIRCF3aL+PXNYb+wgy31hEh7wRgagSzbLxFo8=";
   };
 
   unpacked = pkgs.stdenvNoCC.mkDerivation {
     pname = "humidi-src";
-    version = "2.0-ydotool-patched";
+    version = "2.0-ydotool-patched-sostenuto";
     inherit src;
     nativeBuildInputs = [ pkgs.unzip ];
     unpackPhase = ''

@@ -20,7 +20,7 @@
       gaming.enable = false;
       virtualization = {
         docker.enable = false;
-        virtualMachines.enable = true;
+        virtualMachines.enable = false;
       };
       brave.enable = false;
 
@@ -45,7 +45,7 @@
       # style
       stylix = {
         enable = true;
-        theme = "atelier-lakeside";
+        theme = "fairy-floss";
       };
     };
 
@@ -103,7 +103,11 @@
     ];
   };
 
-    nixpkgs.config.allowUnfree = true;
+    nixpkgs.config = {
+    allowUnfree = true;
+    # only build CUDA binaries for the GTX 1650 (sm_75)
+    cudaCapabilities = [ "7.5" ];
+   };
 
     hardware.firmware = [
       (pkgs.runCommand "100hz-edid" {} ''

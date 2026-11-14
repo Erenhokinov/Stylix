@@ -26,6 +26,7 @@
         config = {
           allowUnfree = true;
           allowUnfreePredicate = (_: true);
+          cudaCapabilities = [ "7.5" ];
         };
         overlays = [
           inputs.rust-overlay.overlays.default

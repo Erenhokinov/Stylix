@@ -150,6 +150,7 @@ in {
 
   config = lib.mkIf cfg.enable {
     home.packages = [ pkgs.qutebrowser
+    		      pkgs.mpv
                       (pkgs.callPackage qute-containers {})
                     ];
 
