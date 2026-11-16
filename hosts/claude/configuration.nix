@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, pkgs-stable, inputs, ... }:
 
 {
 
@@ -44,7 +44,7 @@
       # style
       stylix = {
         enable = true;
-        theme = "fairy-floss";
+        theme = "ubuntu";
       };
     };
 
@@ -54,6 +54,7 @@
       email = "rlazarenko843@gmail.com";
     };
 
+    hardware.deviceTree.enable = false;
     hardware.xpad-noone.enable = lib.mkForce false;
     hardware.graphics = {
       enable = true;
@@ -63,8 +64,8 @@
       modesetting.enable = true;
       powerManagement.enable = true;
       powerManagement.finegrained = true;
-      open = true;
-      package = config.boot.kernelPackages.nvidiaPackages.beta;
+      open = false;
+      package = config.boot.kernelPackages.nvidiaPackages.production; # DONT SWITCH TO NEW_FEATURE FOR NOW (NOT CACHED)!!
       prime = {
         offload.enable = true;
         offload.enableOffloadCmd = true;
@@ -74,6 +75,7 @@
     };
     services.xserver.videoDrivers = [ "nvidia" ];
     services.fprintd.enable = true;
+    services.cloudflare-warp.enable = true;
     services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="04f3", ATTR{idProduct}=="0c4f", ATTR{power/control}="on"
     '';
@@ -91,14 +93,14 @@
     enable = true;
     libraries = with pkgs; [ 
     libGL
-    xorg.libX11
-    xorg.libXext
+    libx11
+    libxext
     stdenv.cc.cc.lib
     zlib
     openssl
     libffi
     glibc
-    xorg.libXfixes
+    libxfixes
     ];
   };
 
@@ -106,6 +108,8 @@
     allowUnfree = true;
     # only build CUDA binaries for the GTX 1650 (sm_75)
     cudaCapabilities = [ "7.5" ];
+    permittedInsecurePackages = [ "qutebrowser-3.7.0" ];
+    problems.handlers.cups.broken = "warn";
    };
 
     hardware.firmware = [

@@ -4,6 +4,8 @@ let
   torch = python3Packages.torch-bin;
   torchaudio = python3Packages.torchaudio-bin;
 
+  mir-eval = python3Packages.mir-eval.overridePythonAttrs (old: { doCheck = false; });
+
   moduleconf = python3Packages.buildPythonPackage rec {
     pname = "moduleconf";
     version = "0.1.4";

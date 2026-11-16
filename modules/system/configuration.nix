@@ -1,4 +1,4 @@
-{ config, lib, inputs, pkgs, ... }:
+{ config, lib, inputs, pkgs, pkgs-stable, ... }:
 
 {
   config = {
@@ -7,16 +7,19 @@
     git
     materialgram
     inputs.nix-devin-cli.packages.${stdenv.hostPlatform.system}.default
-    osu-lazer-bin
     inputs.prismlauncher-cracked.packages.${pkgs.stdenv.hostPlatform.system}.prismlauncher
-    vesktop
+    cloudflare-warp
+    pkgs-stable.vesktop
     ffmpeg
     ydotool
   ];
     # Journal
-    services.journald.extraConfig = "SystemMaxUse=50M\nSystemMaxFiles=5";
-    services.journald.rateLimitBurst = 500;
-    services.journald.rateLimitInterval = "30s";
+    services.journald.settings.Journal = {
+      SystemMaxUse = "50M";
+      SystemMaxFiles = 5;
+      RateLimitBurst = 500;
+      RateLimitIntervalSec = "30s";
+    };
 
     # Locale and TZ
     time.timeZone = "Europe/Kyiv";
@@ -84,8 +87,6 @@
       "rd.udev.log_level=3"
       "udev.log_priority=3"
     ];
-    boot.initrd.systemd.enable = true;
-    boot.initrd.verbose = false;
     boot.plymouth.enable = true;
 
     # Networking

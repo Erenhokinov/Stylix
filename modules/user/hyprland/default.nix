@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  pkgs-stable,
   inputs,
   ...
 }:
@@ -32,7 +33,7 @@ in
     programs.kitty.settings.background_opacity = lib.mkOverride 40 (
       if performance then "1.0" else "0.73"
     );
-    userSettings.emacs.opacity = lib.mkOverride 40 (if performance then 100 else 80);
+
     userSettings.dmenuScripts = {
       enable = true;
       dmenuCmd = "fuzzel -d";
@@ -57,7 +58,7 @@ in
       XCURSOR_THEME = config.gtk.cursorTheme.name;
       GDK_DEBUG = "portals";
       GTK_USE_PORTALS = 1;
-      GRIM_DEFAULT_DIR = config.xdg.userDirs.extraConfig.XDG_SCREENSHOT_DIR;
+      GRIM_DEFAULT_DIR = config.xdg.userDirs.extraConfig.SCREENSHOT;
     };
 
     xdg.portal = {
@@ -95,6 +96,7 @@ in
 
     wayland.windowManager.hyprland = {
       enable = true;
+      configType = "hyprlang";
       package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
       plugins = [ ];
       settings = {
@@ -105,7 +107,11 @@ in
         exec-once = [
           "hyprctl setcursor ${config.gtk.cursorTheme.name} ${builtins.toString config.gtk.cursorTheme.size}"
           "hyprpaper"
-          "WGPU_BACKEND=gl ashell"
+          # ashell races session-service startup (pipewire/dbus) and can hit a
+          # tokio runtime-drop panic if launched too early. Retry on early
+          # crash, but stop once it has stayed alive ~12s so hyprgamemode's
+          # `pkill ashell` does not respawn it.
+          "(i=0; while [ $i -lt 6 ]; do WGPU_BACKEND=vulkan VK_ICD_FILENAMES=/run/opengl-driver/share/vulkan/icd.d/radeon_icd.x86_64.json ashell & p=$!; sleep 12; kill -0 $p 2>/dev/null && break; wait $p 2>/dev/null; i=$((i+1)); done) >/dev/null 2>&1 &"
           "hypridle"
           "iio-hyprland"
           "hyprprofile Default"
@@ -118,7 +124,7 @@ in
           "kitty --class scratch_yazi -e yazi"
           "alacritty --class scratch_numbat -e numbat"
           "alacritty --class scratch_btm -e btm"
-          "element-desktop"
+
           "sleep 5 && hyprctl keyword bind SUPER,S,exec,${spawnBrowser}"
         ];
 
@@ -235,7 +241,8 @@ in
           "SUPERSHIFT,T,exec,screenshot-ocr"
           "CTRLALT,Delete,exec,hyprctl kill"
           "SUPERSHIFT,K,exec,hyprctl kill"
-	  "SUPER,D,exec,discord"
+	  "SUPER,D,exec,vesktop"
+          "SUPER,M,exec,materialgram"
           "SUPER,R,pass,^(com\.obsproject\.Studio)$"
           "SUPERSHIFT,R,pass,^(com\.obsproject\.Studio)$"
           "SUPER,RETURN,exec,${term}"
@@ -353,14 +360,15 @@ in
           "size 80% 85%,class:^(scratch_btm)$"
           "workspace special:scratch_btm silent,class:^(scratch_btm)$"
           "center,class:^(scratch_btm)$"
-          "float,class:^(Element)$"
-          "size 85% 90%,class:^(Element)$"
-          "workspace special:scratch_chat silent,class:^(Element)$"
-          "center,class:^(Element)$"
-          "float,class:^(discord)$"
-          "size 85% 90%,class:^(discord)$"
-          "workspace special:scratch_chat silent,class:^(discord)$"
-          "center,class:^(discord)$"
+
+          "float,class:^(vesktop)$"
+          "size 85% 90%,class:^(vesktop)$"
+          "workspace special:scratch_chat silent,class:^(vesktop)$"
+          "center,class:^(vesktop)$"
+          "float,class:^(io\\.github\\.kukuruzka165\\.materialgram)$"
+          "size 85% 90%,class:^(io\\.github\\.kukuruzka165\\.materialgram)$"
+          "workspace special:scratch_chat silent,class:^(io\\.github\\.kukuruzka165\\.materialgram)$"
+          "center,class:^(io\\.github\\.kukuruzka165\\.materialgram)$"
           "float,title:^(Save to Disk)$"
           "size 70% 75%,title:^(Save to Disk)$"
           "center,title:^(Save to Disk)$"
@@ -394,8 +402,9 @@ in
           "opacity 0.80,class:^(dev.zed.Zed)$"
           "opacity 0.80,class:^(org.pulseaudio.pavucontrol)$"
           "opacity 1.0,class:^(org.qutebrowser.qutebrowser),fullscreen:1"
-          "opacity 0.80,class:^(Element)$"
-          "opacity 0.63,class:^(discord)$"
+
+          "opacity 0.63,class:^(vesktop)$"
+          "opacity 0.63,class:^(io\\.github\\.kukuruzka165\\.materialgram)$"
           "opacity 0.80,class:^(Logseq)$"
           "opacity 0.73,class:^(Brave-browser),fullscreen:1"
           "opacity 1.0,class:^(librewolf),fullscreen:1"
@@ -468,7 +477,7 @@ in
         kitty
         killall
         polkit_gnome
-        (ashell.overrideAttrs (o: {
+        (pkgs-stable.ashell.overrideAttrs (o: {
           patches = (o.patches or [ ]) ++ [
             ./ashell.patch
           ];
@@ -500,8 +509,6 @@ in
                   keyword decoration:rounding 0";
               #pkill -STOP electron;
               #pkill -STOP syncthing;
-              #pkill -STOP emacs;
-              #pkill -STOP emacsclient;
               #systemctl --user stop nextcloud-client;
               pkill ashell;
               pkill hypridle;
@@ -517,8 +524,6 @@ in
                   keyword decoration:rounding ${builtins.toString config.wayland.windowManager.hyprland.settings.decoration.rounding}";
               #pkill -CONT electron;
               #pkill -CONT syncthing;
-              #pkill -CONT emacs;
-              #pkill -CONT emacsclient;
               #systemctl --user start nextcloud-client;
               WGPU_BACKEND=gl ashell & disown;
               hypridle & disown;
@@ -855,8 +860,11 @@ in
       };
     };
     home.file.".config/hypr/hyprpaper.conf".text = ''
-      preload = ${config.stylix.image}
-      wallpaper = ,${config.stylix.image}
+      wallpaper {
+        monitor =
+        path = ${config.stylix.image}
+        fit_mode = cover
+      }
     '';
 
   };

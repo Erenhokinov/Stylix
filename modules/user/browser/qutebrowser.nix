@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, pkgs-stable, ... }:
 let
   cfg = config.userSettings.qutebrowser;
   font = config.stylix.fonts.monospace.name;
@@ -141,6 +141,24 @@ let
                                  maintainers = [];
                                };
                              });
+
+  # qutebrowser routed to the NVIDIA dGPU (GTX 1650) for hardware video decode.
+  # These PRIME offload vars are scoped to this wrapper ONLY — they must not be
+  # global sessionVariables, or they force every EGL app (incl. Hyprland on the
+  # AMD iGPU) onto NVIDIA and crash GL init.
+  qutebrowser-dgpu = pkgs.writeShellApplication {
+    name = "qutebrowser";
+    runtimeInputs = [ pkgs-stable.qutebrowser ];
+    text = ''
+      export __NV_PRIME_RENDER_OFFLOAD=1
+      export __GLX_VENDOR_LIBRARY_NAME=nvidia
+      export __EGL_VENDOR_LIBRARY_FILENAMES=/run/opengl-driver/share/glvnd/egl_vendor.d/10_nvidia.json
+      export __VK_LAYER_NV_optimus=NVIDIA_only
+      export QTWEBENGINE_CHROMIUM_FLAGS="--enable-gpu --ignore-gpu-blocklist --enable-gpu-rasterization"
+      export QT_QUICK_BACKEND=software
+      exec ${pkgs-stable.qutebrowser}/bin/qutebrowser "$@"
+    '';
+  };
 in {
   options = {
     userSettings.qutebrowser = {
@@ -149,15 +167,24 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = [ pkgs.qutebrowser
+    home.packages = [ qutebrowser-dgpu
     		      pkgs.mpv
                       (pkgs.callPackage qute-containers {})
                     ];
+
+    # The wrapper replaces pkgs-stable.qutebrowser in the profile, so re-expose
+    # its .desktop file and hicolor icons (Exec=qutebrowser resolves to the
+    # wrapper on PATH).
+    home.file.".local/share/applications/org.qutebrowser.qutebrowser.desktop".source =
+      "${pkgs-stable.qutebrowser}/share/applications/org.qutebrowser.qutebrowser.desktop";
+    home.file.".local/share/icons/hicolor".source =
+      "${pkgs-stable.qutebrowser}/share/icons/hicolor";
 
     home.file.".config/qutebrowser/userscripts/container-open".source = "${(pkgs.callPackage qute-containers {})}/bin/container-open";
     home.file.".config/qutebrowser/userscripts/containers_config".source = "${(pkgs.callPackage qute-containers {})}/bin/containers_config";
   
     programs.qutebrowser.enable = true;
+    programs.qutebrowser.package = qutebrowser-dgpu;
     programs.qutebrowser.extraConfig = ''
 import sys
 import os.path
@@ -430,8 +457,7 @@ Youtube
     };
 
     home.sessionVariables = lib.mkIf (config.userSettings.browser == "qutebrowser") {
-      DEFAULT_BROWSER = "${pkgs.qutebrowser}/bin/qutebrowser";
-      QTWEBENGINE_CHROMIUM_FLAGS = "--disable-gpu"; # FIXME https://github.com/qutebrowser/qutebrowser/issues/8535
+      DEFAULT_BROWSER = "${qutebrowser-dgpu}/bin/qutebrowser";
     };
 
   };

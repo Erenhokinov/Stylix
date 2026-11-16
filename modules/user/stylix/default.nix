@@ -95,6 +95,17 @@ in
     stylix.targets.kde.enable = true;
     stylix.targets.qt.enable = true;
 
+    stylix.targets.vesktop = {
+      enable = true;
+      colors.enable = true;
+      fonts.enable = true;
+    };
+
+    programs.vesktop = {
+      enable = true;
+      vencord.mutableSettings = true;
+    };
+
     home.file = {
       ".config/qt5ct/colors/oomox-current.conf".source = config.lib.stylix.colors {
         template = builtins.readFile ./oomox-current.conf.mustache;

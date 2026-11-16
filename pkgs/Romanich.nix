@@ -15,7 +15,7 @@ nativeBuildInputs = with pkgs; [
 ];
 buildInputs = with pkgs; [
   wayland
-  xorg.libX11
+  libx11
   libglvnd
   libdrm
   makeWrapper

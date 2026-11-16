@@ -12,6 +12,7 @@ in {
   config = lib.mkIf cfg.enable {
     programs.zsh = {
       enable = true;
+      dotDir = config.home.homeDirectory;
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
       enableCompletion = true;
@@ -62,6 +63,8 @@ in {
 
     programs.neovim = {
       enable = true;
+      withPython3 = true;
+      withRuby = true;
       viAlias = true;
       vimAlias = true;
     };

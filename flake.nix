@@ -27,6 +27,8 @@
           allowUnfree = true;
           allowUnfreePredicate = (_: true);
           cudaCapabilities = [ "7.5" ];
+          permittedInsecurePackages = [ "qutebrowser-3.7.0" ];
+          problems.handlers.cups.broken = "warn";
         };
         overlays = [
           inputs.rust-overlay.overlays.default
@@ -108,7 +110,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     hyprland = {
-      url = "github:hyprwm/Hyprland/v0.52.2?submodules=true";
+      url = "github:hyprwm/Hyprland/v0.52.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

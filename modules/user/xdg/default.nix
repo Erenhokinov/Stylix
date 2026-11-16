@@ -15,6 +15,7 @@ in {
     xdg.userDirs = {
       enable = true;
       createDirectories = true;
+      setSessionVariables = true;
       music = "${config.home.homeDirectory}/Media/Music";
       videos = "${config.home.homeDirectory}/Media/Videos";
       pictures = "${config.home.homeDirectory}/Media/Pictures";
@@ -24,15 +25,15 @@ in {
       desktop = null;
       publicShare = null;
       extraConfig = {
-        XDG_DOTFILES_DIR = "${config.home.homeDirectory}/.dotfiles";
-        XDG_ARCHIVE_DIR = "${config.home.homeDirectory}/Archive";
-        XDG_PROJECTS_DIR = "${config.home.homeDirectory}/Projects";
-        XDG_CLOUD_DIR = "${config.home.homeDirectory}/Drive";
-        XDG_BOOK_DIR = "${config.home.homeDirectory}/Media/Books";
-        XDG_VM_DIR = "${config.home.homeDirectory}/Machines";
-        XDG_NOTES_DIR = "${config.home.homeDirectory}/Notes";
-        XDG_KP_DIR = "${config.home.homeDirectory}/KP";
-        XDG_SCREENSHOT_DIR = "${config.home.homeDirectory}/Screenshots";
+        DOTFILES = "${config.home.homeDirectory}/.dotfiles";
+        ARCHIVE = "${config.home.homeDirectory}/Archive";
+        PROJECTS = "${config.home.homeDirectory}/Projects";
+        CLOUD = "${config.home.homeDirectory}/Drive";
+        BOOK = "${config.home.homeDirectory}/Media/Books";
+        VM = "${config.home.homeDirectory}/Machines";
+        NOTES = "${config.home.homeDirectory}/Notes";
+        KP = "${config.home.homeDirectory}/KP";
+        SCREENSHOT = "${config.home.homeDirectory}/Screenshots";
       };
     };
     xdg.mime.enable = true;

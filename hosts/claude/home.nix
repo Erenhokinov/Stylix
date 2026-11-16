@@ -64,6 +64,7 @@ in
     services.flatpak.update.onActivation = true;
     services.flatpak.packages = [
     { appId = "org.vinegarhq.Sober"; origin = "flathub";  }
+     { appId = "ru.yandex.Browser"; origin = "flathub";  }
     #tralalelo tralala!
     ];
 
@@ -79,8 +80,8 @@ in
           copyToClipboard
           history
         ];
-        theme = spicePkgs.themes.dribbblish;
-        colorScheme = "purple";
+        theme = spicePkgs.themes.comfy;
+        colorScheme = "Hikari";
       };
 
     services.wayvibes = {
@@ -92,6 +93,8 @@ in
     systemd.user.services.wayvibes.Service.ExecStart = lib.mkForce ''
       ${config.services.wayvibes.package}/bin/wayvibes ${config.services.wayvibes.soundpack} -v ${toString config.services.wayvibes.volume} --device-name "SEMICO   USB Gaming Keyboard "
     '';
+    systemd.user.services.wayvibes.Service.After = lib.mkAfter [ "pipewire-pulse.service" ];
+    systemd.user.services.wayvibes.Service.Wants = lib.mkAfter [ "pipewire-pulse.service" ];
 
     wayland.windowManager.hyprland = lib.mkIf config.userSettings.hyprland.enable {
       settings = {

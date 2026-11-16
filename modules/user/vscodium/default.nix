@@ -9,7 +9,7 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    programs.vscode = {
+    programs.vscodium = {
       enable = true;
       package = pkgs.vscodium;
       profiles.default.extensions = with pkgs.vscode-extensions; [
@@ -20,6 +20,7 @@ in {
           geequlim.godot-tools
           yzhang.markdown-all-in-one
       ];
+      profiles.default.mutableUserSettings = true;
       profiles.default.userSettings = {
         "keyboard.dispatch" = "keyCode";
       };
@@ -87,9 +88,9 @@ in {
           "command" = "-magit.reset-hard";
         }
       ];
-      mutableExtensionsDir = false;
+      mutableExtensionsDir = true;
 
     };
-    stylix.targets.vscode.enable = true;
+    stylix.targets.vscodium.enable = true;
     };
 }
