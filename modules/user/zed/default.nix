@@ -3,12 +3,9 @@
   lib,
   pkgs,
   ...
-}:
-
-let
+}: let
   cfg = config.userSettings.zed;
-in
-{
+in {
   options = {
     userSettings.zed = {
       enable = lib.mkEnableOption "Enable zed editor";
@@ -64,7 +61,7 @@ in
       disable_ai = true;
       agent = {
         button = false;
-        model_parameters = [ ];
+        model_parameters = [];
       };
       git_panel = {
         button = false;
@@ -202,7 +199,7 @@ in
           "ctrl-i" = "tab_switcher::ToggleAll";
           "alt-p" = [
             "tab_switcher::Toggle"
-            { "select_last" = true; }
+            {"select_last" = true;}
           ];
           "ctrl-p" = null;
           "ctrl-n" = null;

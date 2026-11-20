@@ -1,6 +1,4 @@
-{ lib, ... }:
-
-{
+{lib, ...}: {
   options = {
     userSettings = {
       name = lib.mkOption {

@@ -3,12 +3,9 @@
   lib,
   pkgs,
   ...
-}:
-
-let
+}: let
   cfg = config.systemSettings.plasma;
-in
-{
+in {
   options = {
     systemSettings.plasma = {
       enable = lib.mkEnableOption "Enable plasma";

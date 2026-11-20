@@ -4,7 +4,6 @@
   fetchurl,
   ...
 }:
-
 pkgs.stdenv.mkDerivation {
   pname = "RomanNow";
   version = "1.0.4";

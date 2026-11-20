@@ -3,12 +3,9 @@
   lib,
   pkgs,
   ...
-}:
-
-let
+}: let
   cfg = config.userSettings.flatpak;
-in
-{
+in {
   options = {
     userSettings.flatpak = {
       enable = lib.mkEnableOption "Enable flatpak support";
@@ -16,7 +13,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = [ pkgs.flatpak ];
+    home.packages = [pkgs.flatpak];
     home.sessionVariables = {
       XDG_DATA_DIRS = "$XDG_DATA_DIRS:/usr/share:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share"; # lets flatpak work
     };

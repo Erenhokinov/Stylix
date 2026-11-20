@@ -4,12 +4,9 @@
   pkgs,
   pkgs-stable,
   ...
-}:
-
-let
+}: let
   cfg = config.userSettings.recording;
-in
-{
+in {
   options = {
     userSettings.recording = {
       enable = lib.mkEnableOption "Enable studio recording and editing programs";

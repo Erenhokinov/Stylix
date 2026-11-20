@@ -3,12 +3,9 @@
   lib,
   pkgs,
   ...
-}:
-
-let
+}: let
   cfg = config.userSettings.alacritty;
-in
-{
+in {
   options = {
     userSettings.alacritty = {
       enable = lib.mkEnableOption "Enable alacritty";
@@ -16,7 +13,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = [ pkgs.alacritty ];
+    home.packages = [pkgs.alacritty];
     programs.alacritty.enable = true;
     programs.alacritty.settings = {
       window.opacity = lib.mkForce 0.85;

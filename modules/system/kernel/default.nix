@@ -3,12 +3,9 @@
   lib,
   pkgs,
   ...
-}:
-
-let
+}: let
   cfg = config.systemSettings.cachy;
-in
-{
+in {
   options = {
     systemSettings.cachy = {
       enable = lib.mkEnableOption "Enable cachyos kernel";
@@ -39,7 +36,7 @@ in
     ];
     services.scx-loader = {
       enable = true;
-      schedsPackages = [ pkgs.scx.rustscheds ];
+      schedsPackages = [pkgs.scx.rustscheds];
       config.default_sched = "scx_lavd";
     };
     boot.consoleLogLevel = 0;

@@ -1,9 +1,10 @@
-{ config, lib, ... }:
-
-let
-  cfg = config.userSettings.xdg;
-in
 {
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.userSettings.xdg;
+in {
   options = {
     userSettings.xdg = {
       enable = lib.mkEnableOption "Enable xdg user dirs with my xdg directory structure";

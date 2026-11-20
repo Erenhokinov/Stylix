@@ -3,13 +3,9 @@
   config,
   pkgs,
   ...
-}:
-
-let
+}: let
   cfg = config.systemSettings.gaming;
-in
-{
-
+in {
   options = {
     systemSettings.gaming = {
       enable = lib.mkEnableOption "Enable Steam and games";
@@ -17,8 +13,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    nixpkgs.config.allowUnfreePredicate =
-      pkg:
+    nixpkgs.config.allowUnfreePredicate = pkg:
       builtins.elem (lib.getName pkg) [
         "steam"
         "steam-unwrapped"
@@ -28,8 +23,8 @@ in
       ];
     nixpkgs.config.packageOverrides = pkgs: {
       steam = pkgs.steam.override {
-        extraPkgs =
-          pkgs: with pkgs; [
+        extraPkgs = pkgs:
+          with pkgs; [
             libxcursor
             libxi
             libxinerama
@@ -116,7 +111,7 @@ in
     #hardware.xpadneo.enable = true;
     boot = {
       # FIXME https://github.com/NixOS/nixpkgs/issues/378447
-      extraModulePackages = with config.boot.kernelPackages; [ xone ];
+      extraModulePackages = with config.boot.kernelPackages; [xone];
       #extraModulePackages = with config.boot.kernelPackages; [ xpadneo ];
     };
     users.groups = {
@@ -135,7 +130,7 @@ in
           "/run/current-system/sw/bin/inotifywait -mr -e close_write,create,moved_to,modify /opt/Steam | while /run/current-system/sw/bin/read path file; do /run/current-system/sw/bin/chmod 777 $path/$file; done;"
         ];
       };
-      wantedBy = [ "graphical.target" ];
+      wantedBy = ["graphical.target"];
     };
     services.cron = {
       enable = true;
@@ -143,7 +138,7 @@ in
         "*/1 * * * * steamgrab"
       ];
     };
-    networking.firewall.allowedTCPPorts = [ 24872 ];
-    networking.firewall.allowedUDPPorts = [ 24872 ];
+    networking.firewall.allowedTCPPorts = [24872];
+    networking.firewall.allowedUDPPorts = [24872];
   };
 }

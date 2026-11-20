@@ -1,6 +1,8 @@
-{ config, lib, ... }:
-
 {
+  config,
+  lib,
+  ...
+}: {
   options = {
     userSettings.terminal = lib.mkOption {
       default = "alacritty";

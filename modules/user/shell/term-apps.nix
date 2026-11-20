@@ -3,12 +3,9 @@
   lib,
   pkgs,
   ...
-}:
-
-let
+}: let
   cfg = config.userSettings.shell.apps;
-in
-{
+in {
   options = {
     userSettings.shell.apps = {
       enable = lib.mkEnableOption "Enable a collection of additional useful CLI apps";

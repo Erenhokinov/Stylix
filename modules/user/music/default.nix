@@ -3,12 +3,9 @@
   lib,
   pkgs,
   ...
-}:
-
-let
+}: let
   cfg = config.userSettings.music;
-in
-{
+in {
   options = {
     userSettings.music = {
       enable = lib.mkEnableOption "Enable apps for making music";
@@ -43,12 +40,12 @@ in
         terminal = false;
         type = "Application";
         icon = "flstudio";
-        mimeTypes = [ "application/octet-stream" ];
+        mimeTypes = ["application/octet-stream"];
       })
       (stdenv.mkDerivation {
         name = "flstudio-icon";
         # icon from https://www.reddit.com/r/MacOS/comments/jtmp7z/i_made_icons_for_discord_spotify_and_fl_studio_in/
-        src = [ ./flstudio.png ];
+        src = [./flstudio.png];
 
         unpackPhase = ''
           for srcFile in $src; do

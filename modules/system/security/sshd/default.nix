@@ -1,9 +1,10 @@
-{ config, lib, ... }:
-
-let
-  cfg = config.systemSettings.security.sshd;
-in
 {
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.systemSettings.security.sshd;
+in {
   options = {
     systemSettings.security.sshd = {
       enable = lib.mkEnableOption "Enable incoming ssh connections";

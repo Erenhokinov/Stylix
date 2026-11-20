@@ -5,15 +5,14 @@
   pkgs,
   pkgs-stable,
   ...
-}:
-
-{
+}: {
   config = {
     # Packages
     environment.systemPackages = with pkgs; [
       git
       materialgram
       inputs.nix-devin-cli.packages.${stdenv.hostPlatform.system}.default
+      inputs.alejandra.packages.${stdenv.hostPlatform.system}.default
       inputs.prismlauncher-cracked.packages.${pkgs.stdenv.hostPlatform.system}.prismlauncher
       ffmpeg
       ydotool
@@ -44,7 +43,7 @@
 
     # Use zsh
     programs.zsh.enable = true;
-    environment.shells = with pkgs; [ zsh ];
+    environment.shells = with pkgs; [zsh];
     users.defaultUserShell = pkgs.zsh;
 
     # Fix nix path
@@ -74,7 +73,7 @@
     };
 
     # wheel group gets trusted access to nix daemon
-    nix.settings.trusted-users = [ "@wheel" ];
+    nix.settings.trusted-users = ["@wheel"];
 
     # Bootloader
     # Use systemd-boot if uefi, default to grub otherwise
@@ -105,5 +104,4 @@
     programs.localsend.enable = true;
     programs.localsend.openFirewall = true;
   };
-
 }

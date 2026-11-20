@@ -5,15 +5,12 @@
   pkgs-stable,
   inputs,
   ...
-}:
-
-{
-
+}: {
   config = {
     systemSettings = {
       # users
-      users = [ "claude" ];
-      adminUsers = [ "claude" ];
+      users = ["claude"];
+      adminUsers = ["claude"];
 
       # hardware
       cachy.enable = true;
@@ -80,7 +77,7 @@
         nvidiaBusId = "PCI:1:0:0";
       };
     };
-    services.xserver.videoDrivers = [ "nvidia" ];
+    services.xserver.videoDrivers = ["nvidia"];
     services.fprintd.enable = true;
     services.udev.extraRules = ''
       ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="04f3", ATTR{idProduct}=="0c4f", ATTR{power/control}="on"
@@ -111,19 +108,19 @@
 
     nixpkgs.config = {
       allowUnfree = true;
-      cudaCapabilities = [ "7.5" ];
-      permittedInsecurePackages = [ "qutebrowser-3.7.0" ];
+      cudaCapabilities = ["7.5"];
+      permittedInsecurePackages = ["qutebrowser-3.7.0"];
       problems.handlers.cups.broken = "ignore";
     };
 
     hardware.firmware = [
-      (pkgs.runCommand "100hz-edid" { } ''
+      (pkgs.runCommand "100hz-edid" {} ''
         mkdir -p $out/lib/firmware/edid
         cp ${./100hz.bin} $out/lib/firmware/edid/100hz.bin
       '')
     ];
 
-    boot.supportedFilesystems = [ "ntfs" ];
+    boot.supportedFilesystems = ["ntfs"];
     boot.kernelParams = [
       "drm.edid_firmware=eDP-1:edid/100hz.bin"
       "usbhid.mousepoll=1"

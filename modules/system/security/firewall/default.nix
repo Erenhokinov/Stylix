@@ -1,9 +1,10 @@
-{ config, lib, ... }:
-
-let
-  cfg = config.systemSettings.security.firewall;
-in
 {
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.systemSettings.security.firewall;
+in {
   options = {
     systemSettings.security.firewall = {
       # TODO make this more granular and better :|

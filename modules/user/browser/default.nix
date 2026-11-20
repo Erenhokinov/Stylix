@@ -1,9 +1,10 @@
-{ config, lib, ... }:
-
-let
-  browser = config.userSettings.browser;
-in
 {
+  config,
+  lib,
+  ...
+}: let
+  browser = config.userSettings.browser;
+in {
   options = {
     userSettings.browser = lib.mkOption {
       default = null;
@@ -30,7 +31,8 @@ in
     userSettings.spawnBrowser = lib.mkMerge [
       (lib.mkIf (browser == "brave") "sh -c 'brave --new-window'")
       (lib.mkIf (browser == "librewolf") browser)
-      (lib.mkIf (!(config.userSettings.hyprland.hyprprofiles.enable) && (browser == "qutebrowser"))
+      (
+        lib.mkIf (!(config.userSettings.hyprland.hyprprofiles.enable) && (browser == "qutebrowser"))
         "qutebrowser --qt-flag ignore-gpu-blacklist --qt-flag enable-gpu-rasterization --qt-flag enable-native-gpu-memory-buffers --qt-flag enable-accelerated-2d-canvas --qt-flag num-raster-threads=4"
       )
       (lib.mkIf (

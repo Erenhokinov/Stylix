@@ -3,12 +3,9 @@
   lib,
   pkgs,
   ...
-}:
-
-let
+}: let
   cfg = config.userSettings.japanese;
-in
-{
+in {
   options = {
     userSettings.japanese = {
       enable = lib.mkEnableOption "Enable Japanese input";

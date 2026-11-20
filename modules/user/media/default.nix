@@ -3,9 +3,7 @@
   lib,
   pkgs,
   ...
-}:
-
-let
+}: let
   cfg = config.userSettings.media;
 
   # nixpkgs' yt-dlp is too old for YouTube's PO-token requirements and breaks
@@ -28,16 +26,15 @@ let
   # the NVIDIA dGPU (GTX 1650) instead of the AMD iGPU.
   mpv-dgpu = pkgs.writeShellApplication {
     name = "mpv";
-    runtimeInputs = [ (pkgs.mpv.override { yt-dlp = yt-dlp-fresh; }) ];
+    runtimeInputs = [(pkgs.mpv.override {yt-dlp = yt-dlp-fresh;})];
     text = ''
       export __NV_PRIME_RENDER_OFFLOAD=1
       export __GLX_VENDOR_LIBRARY_NAME=nvidia
       export __EGL_VENDOR_LIBRARY_FILENAMES=/run/opengl-driver/share/glvnd/egl_vendor.d/10_nvidia.json
-      exec ${lib.getExe (pkgs.mpv.override { yt-dlp = yt-dlp-fresh; })} "$@"
+      exec ${lib.getExe (pkgs.mpv.override {yt-dlp = yt-dlp-fresh;})} "$@"
     '';
   };
-in
-{
+in {
   options = {
     userSettings.media = {
       enable = lib.mkEnableOption "Enable media playback apps";
@@ -51,6 +48,5 @@ in
       yt-dlp-fresh
       ffmpeg
     ];
-
   };
 }

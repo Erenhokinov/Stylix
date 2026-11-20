@@ -5,19 +5,19 @@
   inputs,
   osConfig,
   ...
-}:
-
-let
+}: let
   cfg = config.userSettings.stylix;
   theme = import (./. + "../../../themes" + ("/" + config.userSettings.stylix.theme));
-in
-{
+in {
   options = {
     userSettings.stylix = {
       enable = lib.mkEnableOption "Enable stylix theming";
     };
     userSettings.stylix.theme = lib.mkOption {
-      default = if (osConfig.stylix.enable) then osConfig.systemSettings.stylix.theme else "io";
+      default =
+        if (osConfig.stylix.enable)
+        then osConfig.systemSettings.stylix.theme
+        else "io";
       type = lib.types.enum (
         builtins.attrNames (
           lib.filterAttrs (name: type: type == "directory") (builtins.readDir ../../themes)
@@ -28,7 +28,7 @@ in
   };
 
   # for whatever reason, I can't import stylix hmModule if the nixosModule is imported
-  imports = lib.optionals (!osConfig.stylix.enable) [ inputs.stylix.homeModules.stylix ];
+  imports = lib.optionals (!osConfig.stylix.enable) [inputs.stylix.homeModules.stylix];
 
   config = lib.mkIf cfg.enable {
     stylix.enable = true;
@@ -135,9 +135,9 @@ in
     ];
 
     fonts.fontconfig.defaultFonts = {
-      monospace = [ config.stylix.fonts.monospace.name ];
-      sansSerif = [ config.stylix.fonts.sansSerif.name ];
-      serif = [ config.stylix.fonts.serif.name ];
+      monospace = [config.stylix.fonts.monospace.name];
+      sansSerif = [config.stylix.fonts.sansSerif.name];
+      serif = [config.stylix.fonts.serif.name];
     };
   };
 }

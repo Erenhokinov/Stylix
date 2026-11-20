@@ -3,18 +3,17 @@
   python3Packages,
   fetchurl,
   lib,
-}:
-
-let
+}: let
   pythonEnv = python3Packages.python.withPackages (
-    ps: with ps; [
-      pyqt6
-      mido
-      numpy
-      pynput
-      evdev
-      python-rtmidi
-    ]
+    ps:
+      with ps; [
+        pyqt6
+        mido
+        numpy
+        pynput
+        evdev
+        python-rtmidi
+      ]
   );
 
   src = fetchurl {
@@ -26,7 +25,7 @@ let
     pname = "humidi-src";
     version = "2.0-ydotool-patched-sostenuto";
     inherit src;
-    nativeBuildInputs = [ pkgs.unzip ];
+    nativeBuildInputs = [pkgs.unzip];
     unpackPhase = ''
       unzip -q $src -d .
     '';
@@ -41,9 +40,8 @@ let
       cp -r humidi/* $out/
     '';
   };
-
 in
-pkgs.writeShellScriptBin "humidi" ''
-  export PATH="${pkgs.ydotool}/bin:${pkgs.alsa-utils}/bin:$PATH"
-  exec ${pythonEnv}/bin/python3 ${unpacked}/main.py "$@"
-''
+  pkgs.writeShellScriptBin "humidi" ''
+    export PATH="${pkgs.ydotool}/bin:${pkgs.alsa-utils}/bin:$PATH"
+    exec ${pythonEnv}/bin/python3 ${unpacked}/main.py "$@"
+  ''

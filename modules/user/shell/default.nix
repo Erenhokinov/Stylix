@@ -3,12 +3,9 @@
   lib,
   pkgs,
   ...
-}:
-
-let
+}: let
   cfg = config.userSettings.shell;
-in
-{
+in {
   options = {
     userSettings.shell = {
       enable = lib.mkEnableOption "Enable fancy zsh with some necessary CLI utilities";

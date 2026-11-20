@@ -4,12 +4,9 @@
   config,
   lib,
   ...
-}:
-
-let
+}: let
   cfg = config.systemSettings.hyprland;
-in
-{
+in {
   options = {
     systemSettings.hyprland = {
       enable = lib.mkEnableOption "Enable hyprland";
@@ -71,8 +68,8 @@ in
     # Define systemd service to run on boot to load avatars for sddm
     systemd.services."sddm-avatar" = {
       description = "Service to copy or update users Avatars at startup.";
-      wantedBy = [ "multi-user.target" ];
-      before = [ "sddm.service" ];
+      wantedBy = ["multi-user.target"];
+      before = ["sddm.service"];
       script = ''
         set -eu
         mkdir -p /var/lib/AccountsService/icons
@@ -99,7 +96,7 @@ in
 
     # # Ensures SDDM starts after the service.
     systemd.services.sddm = {
-      after = [ "sddm-avatar.service" ];
+      after = ["sddm-avatar.service"];
     };
 
     # xwayland
@@ -110,7 +107,7 @@ in
         variant = "";
         options = "caps:escape";
       };
-      excludePackages = [ pkgs.xterm ];
+      excludePackages = [pkgs.xterm];
     };
 
     # Keyring
@@ -120,7 +117,7 @@ in
     # Dbus
     services.dbus = {
       enable = true;
-      packages = [ pkgs.dconf ];
+      packages = [pkgs.dconf];
     };
 
     programs.dconf.enable = true;
@@ -138,7 +135,7 @@ in
     programs.iio-hyprland = {
       enable = true;
       package = pkgs.iio-hyprland.overrideAttrs {
-        patches = [ ./iio-hyprland-hyprpaper.patch ];
+        patches = [./iio-hyprland-hyprpaper.patch];
       };
     };
   };

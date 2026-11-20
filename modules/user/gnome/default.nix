@@ -1,9 +1,10 @@
-{ config, lib, ... }:
-
-let
-  cfg = config.userSettings.gnome;
-in
 {
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.userSettings.gnome;
+in {
   options = {
     userSettings.gnome = {
       enable = lib.mkEnableOption "Enable gnome config";

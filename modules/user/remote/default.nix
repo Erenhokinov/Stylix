@@ -3,12 +3,9 @@
   lib,
   pkgs,
   ...
-}:
-
-let
+}: let
   cfg = config.userSettings.remote;
-in
-{
+in {
   options = {
     userSettings.remote = {
       enable = lib.mkEnableOption "Enable programs for controlling remote machines";

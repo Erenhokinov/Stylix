@@ -4,13 +4,10 @@
   pkgs,
   inputs,
   ...
-}:
-
-let
+}: let
   cfg = config.systemSettings.stylix;
   theme = import (./. + "../../../themes" + ("/" + config.systemSettings.stylix.theme));
-in
-{
+in {
   options = {
     systemSettings.stylix = {
       enable = lib.mkEnableOption "Enable stylix theming";
@@ -26,7 +23,7 @@ in
     };
   };
 
-  imports = [ inputs.stylix.nixosModules.stylix ];
+  imports = [inputs.stylix.nixosModules.stylix];
 
   config = lib.mkIf cfg.enable {
     stylix.enable = true;

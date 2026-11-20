@@ -3,9 +3,7 @@
   python3Packages,
   fetchPypi,
   lib,
-}:
-
-let
+}: let
   torch = python3Packages.torch-bin;
   torchaudio = python3Packages.torchaudio-bin;
 
@@ -36,7 +34,7 @@ let
       dist = "py3";
       python = "py3";
     };
-    propagatedBuildInputs = [ torch ];
+    propagatedBuildInputs = [torch];
     doCheck = false;
   };
 
@@ -90,7 +88,7 @@ let
       setuptools
       wheel
     ];
-    propagatedBuildInputs = [ python3Packages.numpy ];
+    propagatedBuildInputs = [python3Packages.numpy];
     doCheck = false;
   };
 
@@ -104,55 +102,54 @@ let
     };
     doCheck = false;
   };
-
 in
-python3Packages.buildPythonPackage rec {
-  pname = "transkun";
-  version = "2.0.1";
-  format = "wheel";
-  src = fetchPypi {
-    inherit pname version format;
-    hash = "sha256-fX9b+IsNIffaBBWwic/zvLy92gTho8lxmWSUeULIWf4=";
-    dist = "py3";
-    python = "py3";
-  };
+  python3Packages.buildPythonPackage rec {
+    pname = "transkun";
+    version = "2.0.1";
+    format = "wheel";
+    src = fetchPypi {
+      inherit pname version format;
+      hash = "sha256-fX9b+IsNIffaBBWwic/zvLy92gTho8lxmWSUeULIWf4=";
+      dist = "py3";
+      python = "py3";
+    };
 
-  # pkg_resources was removed from setuptools>=81; transcribe.py only uses it
-  # for resource_filename() to locate the bundled pretrained model files. The
-  # wheel is installed straight from the .whl, so patch the installed file.
-  postInstall = ''
-    f=$(find $out -name transcribe.py | head -1)
-    sed -i \
-      -e 's|^    import pkg_resources$|    from importlib import resources as _res|' \
-      -e 's|pkg_resources.resource_filename(__name__, "pretrained/2.0.pt")|str(_res.files("transkun") / "pretrained" / "2.0.pt")|' \
-      -e 's|pkg_resources.resource_filename(__name__, "pretrained/2.0.conf")|str(_res.files("transkun") / "pretrained" / "2.0.conf")|' \
-      "$f"
-  '';
+    # pkg_resources was removed from setuptools>=81; transcribe.py only uses it
+    # for resource_filename() to locate the bundled pretrained model files. The
+    # wheel is installed straight from the .whl, so patch the installed file.
+    postInstall = ''
+      f=$(find $out -name transcribe.py | head -1)
+      sed -i \
+        -e 's|^    import pkg_resources$|    from importlib import resources as _res|' \
+        -e 's|pkg_resources.resource_filename(__name__, "pretrained/2.0.pt")|str(_res.files("transkun") / "pretrained" / "2.0.pt")|' \
+        -e 's|pkg_resources.resource_filename(__name__, "pretrained/2.0.conf")|str(_res.files("transkun") / "pretrained" / "2.0.conf")|' \
+        "$f"
+    '';
 
-  propagatedBuildInputs = with python3Packages; [
-    setuptools
-    scipy
-    torch
-    torchaudio
-    pydub
-    seaborn
-    matplotlib
-    tensorboard
-    tqdm
-    soxr
-    mir-eval
-    ncls
-    pretty-midi
-    torch-optimizer
-    moduleconf
-    sox-py
-  ];
+    propagatedBuildInputs = with python3Packages; [
+      setuptools
+      scipy
+      torch
+      torchaudio
+      pydub
+      seaborn
+      matplotlib
+      tensorboard
+      tqdm
+      soxr
+      mir-eval
+      ncls
+      pretty-midi
+      torch-optimizer
+      moduleconf
+      sox-py
+    ];
 
-  doCheck = false;
+    doCheck = false;
 
-  meta = with lib; {
-    description = "Neural Semi-CRF event-based piano transcription (audio to MIDI), CUDA-enabled";
-    homepage = "https://github.com/Yujia-Yan/Skipping-The-Frame-Level";
-    license = licenses.mit;
-  };
-}
+    meta = with lib; {
+      description = "Neural Semi-CRF event-based piano transcription (audio to MIDI), CUDA-enabled";
+      homepage = "https://github.com/Yujia-Yan/Skipping-The-Frame-Level";
+      license = licenses.mit;
+    };
+  }

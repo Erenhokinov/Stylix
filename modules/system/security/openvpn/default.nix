@@ -3,12 +3,9 @@
   lib,
   pkgs,
   ...
-}:
-
-let
+}: let
   cfg = config.systemSettings.security.openvpn;
-in
-{
+in {
   options = {
     systemSettings.security.openvpn = {
       enable = lib.mkEnableOption "Enable openvpn";
@@ -16,7 +13,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = [ pkgs.openvpn ];
+    environment.systemPackages = [pkgs.openvpn];
     environment.etc.openvpn.source = "${pkgs.update-resolv-conf}/libexec/openvpn";
   };
 }

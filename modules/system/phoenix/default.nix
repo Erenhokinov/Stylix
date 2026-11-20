@@ -4,9 +4,7 @@
   pkgs,
   pkgs-stable,
   ...
-}:
-
-{
+}: {
   options = {
     systemSettings = {
       dotfilesDir = lib.mkOption {
@@ -176,7 +174,7 @@
       };
     };
     systemd.timers."phoenix-system-builder-auto" = lib.mkIf config.systemSettings.systemBuilder.enable {
-      wantedBy = [ "timers.target" ];
+      wantedBy = ["timers.target"];
       timerConfig = {
         OnCalendar = config.systemSettings.systemBuilder.buildCronExpression;
         Unit = "phoenix-system-builder.service";

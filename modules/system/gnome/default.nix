@@ -3,12 +3,9 @@
   config,
   lib,
   ...
-}:
-
-let
+}: let
   cfg = config.systemSettings.gnome;
-in
-{
+in {
   options = {
     systemSettings.gnome = {
       enable = lib.mkEnableOption "Enable gnome";

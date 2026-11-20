@@ -3,12 +3,9 @@
   lib,
   pkgs,
   ...
-}:
-
-let
+}: let
   cfg = config.userSettings.virtualization.virtualMachines;
-in
-{
+in {
   options = {
     userSettings.virtualization.virtualMachines = {
       enable = lib.mkEnableOption "Enable helpful VM apps";

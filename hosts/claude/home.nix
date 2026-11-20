@@ -5,14 +5,11 @@
   nix-flatpak,
   inputs,
   ...
-}:
-
-let
-  transkun = pkgs.callPackage ../../pkgs/transkun.nix { };
+}: let
+  transkun = pkgs.callPackage ../../pkgs/transkun.nix {};
   #  romannow = pkgs.callPackage ../../pkgs/Romanich.nix { };
-  humidi = pkgs.callPackage ../../pkgs/humidi.nix { };
-in
-{
+  humidi = pkgs.callPackage ../../pkgs/humidi.nix {};
+in {
   imports = [
     inputs.nix-flatpak.homeManagerModules.nix-flatpak
     inputs.spicetify-nix.homeManagerModules.default
@@ -55,7 +52,6 @@ in
 
       # style
       stylix.enable = true;
-
     };
 
     home.sessionVariables = lib.mkIf config.userSettings.hyprland.enable {
@@ -78,45 +74,41 @@ in
       #tralalelo tralala!
     ];
 
-    programs.spicetify =
-      let
-        spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.system};
-      in
-      {
-        enable = true;
-        enabledExtensions = with spicePkgs.extensions; [
-          adblockify
-          hidePodcasts
-          autoVolume
-          copyToClipboard
-          history
-        ];
-        theme = spicePkgs.themes.text;
-        colorScheme = "GruvboxHard";
-      };
+    programs.spicetify = let
+      spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.system};
+    in {
+      enable = true;
+      enabledExtensions = with spicePkgs.extensions; [
+        adblockify
+        hidePodcasts
+        autoVolume
+        copyToClipboard
+      ];
+      theme = spicePkgs.themes.text;
+      colorScheme = "GruvboxHard";
+    };
 
     programs.nixcord = {
       enable = true;
       discord.vencord.enable = true;
-      config.plugins.hideMedia.enable = true;
-      config.plugins.fakeNitro.enable = true;
-      config.plugins.silentTyping.enable = true;
-      config.plugins.spotifyControls.enable = true;
-      config.plugins.crashHandler.enable = true;
+      config.plugins = {
+        hideMedia.enable = true;
+        fakeNitro.enable = true;
+        silentTyping.enable = true;
+        spotifyControls.enable = true;
+        crashHandler.enable = true;
+      };
     };
 
     services.wayvibes = {
       enable = true;
-      soundpack = "${inputs.wayvibes}/soundpacks/cherrymx-black-pbt";
-      volume = 1;
+      soundpack = "${inputs.wayvibes}/soundpacks/akko_lavender_purples";
+      volume = 2;
     };
 
     systemd.user.services.wayvibes.Service.ExecStart = lib.mkForce ''
       ${config.services.wayvibes.package}/bin/wayvibes ${config.services.wayvibes.soundpack} -v ${toString config.services.wayvibes.volume} --device-name "SEMICO   USB Gaming Keyboard "
     '';
-    systemd.user.services.wayvibes.Service.After = lib.mkAfter [ "pipewire-pulse.service" ];
-    systemd.user.services.wayvibes.Service.Wants = lib.mkAfter [ "pipewire-pulse.service" ];
-
     wayland.windowManager.hyprland = lib.mkIf config.userSettings.hyprland.enable {
       settings = {
         monitor = [

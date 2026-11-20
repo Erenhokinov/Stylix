@@ -3,12 +3,9 @@
   lib,
   pkgs,
   ...
-}:
-
-let
+}: let
   cfg = config.userSettings.brave;
-in
-{
+in {
   options = {
     userSettings.brave = {
       enable = lib.mkEnableOption "Enable brave browser";
@@ -19,11 +16,11 @@ in
     programs.brave.enable = true;
     programs.brave.package = pkgs.brave;
     programs.brave.extensions = [
-      { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # ublock
-      { id = "oboonakemofpalcgghocfoadofidjkkk"; } # keepassxc
-      { id = "kgcjekpmcjjogibpjebkhaanilehneje"; } # karakeep
-      { id = "abbpaepbpakcpipajigmlpnhlnbennna"; } # yt music mode
-      { id = "gebbhagfogifgggkldgodflihgfeippi"; } # youtube dislikes
+      {id = "cjpalhdlnbpafiamejdnhcphjbkeiagm";} # ublock
+      {id = "oboonakemofpalcgghocfoadofidjkkk";} # keepassxc
+      {id = "kgcjekpmcjjogibpjebkhaanilehneje";} # karakeep
+      {id = "abbpaepbpakcpipajigmlpnhlnbennna";} # yt music mode
+      {id = "gebbhagfogifgggkldgodflihgfeippi";} # youtube dislikes
     ];
     programs.brave.commandLineArgs = [
       "--password-store=gnome-libsecret"

@@ -3,12 +3,9 @@
   lib,
   pkgs,
   ...
-}:
-
-let
+}: let
   cfg = config.userSettings.librewolf;
-in
-{
+in {
   options = {
     userSettings.librewolf = {
       enable = lib.mkEnableOption "Enable librewolf browser";
@@ -17,7 +14,7 @@ in
 
   config = lib.mkIf cfg.enable {
     # Module installing librewolf as default browser
-    home.packages = [ pkgs.librewolf ];
+    home.packages = [pkgs.librewolf];
 
     home.file.".librewolf/librewolf.overrides.cfg".text = ''
       defaultPref("font.size.variable.x-western",20);
@@ -53,5 +50,4 @@ in
       DEFAULT_BROWSER = "${pkgs.librewolf}/bin/librewolf";
     };
   };
-
 }

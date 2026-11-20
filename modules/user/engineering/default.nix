@@ -4,12 +4,9 @@
   pkgs,
   pkgs-stable,
   ...
-}:
-
-let
+}: let
   cfg = config.userSettings.engineering;
-in
-{
+in {
   options = {
     userSettings.engineering = {
       enable = lib.mkEnableOption "Enable engineering programs";

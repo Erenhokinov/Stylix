@@ -3,13 +3,10 @@
   lib,
   pkgs,
   ...
-}:
-
-let
+}: let
   cfg = config.systemSettings.virtualization.docker;
   adminUsers = config.systemSettings.adminUsers;
-in
-{
+in {
   options = {
     systemSettings.virtualization.docker = {
       enable = lib.mkEnableOption "Enable docker";
@@ -26,9 +23,10 @@ in
       map (user: {
         name = user;
         value = {
-          extraGroups = [ "docker" ];
+          extraGroups = ["docker"];
         };
-      }) adminUsers
+      })
+      adminUsers
     );
     environment.systemPackages = with pkgs; [
       docker

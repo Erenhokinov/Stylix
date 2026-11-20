@@ -1,6 +1,4 @@
-{ lib, ... }:
-
-{
+{lib, ...}: {
   options = {
     userSettings.dmenuScripts = {
       enable = lib.mkEnableOption "Enable collection of dmenu scripts";

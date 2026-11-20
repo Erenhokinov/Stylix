@@ -3,12 +3,9 @@
   lib,
   pkgs,
   ...
-}:
-
-let
+}: let
   cfg = config.userSettings.blender;
-in
-{
+in {
   options = {
     userSettings.blender = {
       enable = lib.mkEnableOption "Enable blender";

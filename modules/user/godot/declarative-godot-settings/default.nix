@@ -3,12 +3,9 @@
   lib,
   pkgs,
   ...
-}:
-
-let
+}: let
   cfg = config.userSettings.godot;
-in
-{
+in {
   config = lib.mkIf cfg.enable {
     home.file.".config/declarative-godot-settings/apply_settings.gd".source = config.lib.stylix.colors {
       template = builtins.readFile ./apply_settings.gd;

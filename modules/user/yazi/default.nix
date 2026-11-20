@@ -3,12 +3,9 @@
   lib,
   pkgs,
   ...
-}:
-
-let
+}: let
   cfg = config.userSettings.yazi;
-in
-{
+in {
   options = {
     userSettings.yazi = {
       enable = lib.mkEnableOption "Enable yazi TUI file manager";
@@ -151,11 +148,11 @@ in
         }
         {
           run = "shell ' \"$@\"' --cursor=0 --interactive";
-          on = [ "@" ];
+          on = ["@"];
         }
         {
           run = "hidden toggle";
-          on = [ "<C-h>" ];
+          on = ["<C-h>"];
         }
         {
           run = "yank";
@@ -299,35 +296,35 @@ in
         }
         {
           run = "tab_create --current";
-          on = [ "t" ];
+          on = ["t"];
         }
         {
           run = "close";
-          on = [ "x" ];
+          on = ["x"];
         }
         {
           run = "tab_switch 1 --relative";
-          on = [ "J" ];
+          on = ["J"];
         }
         {
           run = "tab_switch 1 --relative";
-          on = [ "<C-Tab>" ];
+          on = ["<C-Tab>"];
         }
         {
           run = "tab_switch -1 --relative";
-          on = [ "K" ];
+          on = ["K"];
         }
         {
           run = "tab_switch -1 --relative";
-          on = [ "<C-BackTab>" ];
+          on = ["<C-BackTab>"];
         }
         {
           run = "undo";
-          on = [ "u" ];
+          on = ["u"];
         }
         {
           run = "redo";
-          on = [ "<C-r>" ];
+          on = ["<C-r>"];
         }
       ];
       plugins = {

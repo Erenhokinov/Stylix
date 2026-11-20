@@ -1,9 +1,10 @@
-{ config, lib, ... }:
-
-let
-  cfg = config.systemSettings.security.automount;
-in
 {
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.systemSettings.security.automount;
+in {
   options = {
     systemSettings.security.automount = {
       enable = lib.mkEnableOption "Enable automount";

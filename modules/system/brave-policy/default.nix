@@ -1,9 +1,10 @@
-{ config, lib, ... }:
-
-let
-  cfg = config.systemSettings.brave;
-in
 {
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.systemSettings.brave;
+in {
   options = {
     systemSettings.brave = {
       enable = lib.mkEnableOption "Enable brave group policies";

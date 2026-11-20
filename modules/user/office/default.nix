@@ -4,12 +4,9 @@
   pkgs,
   pkgs-stable,
   ...
-}:
-
-let
+}: let
   cfg = config.userSettings.office;
-in
-{
+in {
   options = {
     userSettings.office = {
       enable = lib.mkEnableOption "Enable my office programs";

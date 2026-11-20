@@ -3,12 +3,9 @@
   config,
   pkgs,
   ...
-}:
-
-let
+}: let
   cfg = config.systemSettings.security.firejail;
-in
-{
+in {
   options = {
     systemSettings.security.firejail = {
       enable = lib.mkEnableOption "Use firejail on some apps for extra security";
@@ -16,7 +13,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ firejail ];
+    environment.systemPackages = with pkgs; [firejail];
     programs.firejail.enable = true;
     programs.firejail.wrappedBinaries = {
       brave = {

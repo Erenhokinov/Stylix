@@ -1,9 +1,10 @@
-{ lib, config, ... }:
-
-let
-  cfg = config.systemSettings.flatpak;
-in
 {
+  lib,
+  config,
+  ...
+}: let
+  cfg = config.systemSettings.flatpak;
+in {
   options = {
     systemSettings.flatpak = {
       enable = lib.mkEnableOption "Enable flatpaks";

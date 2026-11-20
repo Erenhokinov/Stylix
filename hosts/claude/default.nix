@@ -1,6 +1,8 @@
-{ config, inputs, ... }:
-
 {
+  config,
+  inputs,
+  ...
+}: {
   imports = [
     ./configuration.nix
     ./hardware-configuration.nix
@@ -16,7 +18,8 @@
             ../../modules/user
           ];
         };
-      }) config.systemSettings.users
+      })
+      config.systemSettings.users
     );
   };
 }

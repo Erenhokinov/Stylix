@@ -3,12 +3,9 @@
   lib,
   pkgs-stable,
   ...
-}:
-
-let
+}: let
   cfg = config.userSettings.art;
-in
-{
+in {
   options = {
     userSettings.art = {
       enable = lib.mkEnableOption "Enable art apps";
@@ -28,7 +25,7 @@ in
     ];
     userSettings.blender.enable = true;
     xdg.mimeApps.defaultApplications = lib.mkForce {
-      "image/svg+xml" = [ "org.inkscape.Inkscape.desktop" ];
+      "image/svg+xml" = ["org.inkscape.Inkscape.desktop"];
     };
   };
 }

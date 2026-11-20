@@ -3,11 +3,9 @@
   lib,
   pkgs,
   ...
-}:
-let
+}: let
   cfg = config.userSettings.vscodium;
-in
-{
+in {
   options = {
     userSettings.vscodium = {
       enable = lib.mkEnableOption "Enable vscodium";
@@ -22,6 +20,7 @@ in
         vscodevim.vim
         kahole.magit
         jnoortheen.nix-ide
+        kamadorueda.alejandra
         leonardssh.vscord
         mkhl.direnv
         geequlim.godot-tools
@@ -104,7 +103,6 @@ in
         }
       ];
       mutableExtensionsDir = true;
-
     };
     stylix.targets.vscodium.enable = true;
   };

@@ -5,16 +5,14 @@
   pkgs-stable,
   inputs,
   ...
-}:
-let
+}: let
   cfg = config.userSettings.hyprland;
   font = config.stylix.fonts.monospace.name;
   term = config.userSettings.terminal;
   spawnEditor = config.userSettings.spawnEditor;
   spawnBrowser = config.userSettings.spawnBrowser;
   performance = config.userSettings.hyprland.performanceOptimizations;
-in
-{
+in {
   options = {
     userSettings.hyprland = {
       enable = lib.mkEnableOption "Enable hyprland";
@@ -28,10 +26,16 @@ in
 
   config = lib.mkIf cfg.enable {
     userSettings.alacritty.enable = true;
-    programs.alacritty.settings.window.opacity = lib.mkOverride 40 (if performance then 1.0 else 0.73);
+    programs.alacritty.settings.window.opacity = lib.mkOverride 40 (
+      if performance
+      then 1.0
+      else 0.73
+    );
     userSettings.kitty.enable = true;
     programs.kitty.settings.background_opacity = lib.mkOverride 40 (
-      if performance then "1.0" else "0.73"
+      if performance
+      then "1.0"
+      else "0.73"
     );
 
     userSettings.dmenuScripts = {
@@ -70,11 +74,11 @@ in
     };
 
     xdg.portal.config.common = {
-      default = [ "hyprland" ];
+      default = ["hyprland"];
       "org.freedesktop.impl.portal.FileChooser" = "termfilechooser";
     };
     xdg.portal.config.hyprland = {
-      default = [ "hyprland" ];
+      default = ["hyprland"];
       "org.freedesktop.impl.portal.FileChooser" = "termfilechooser";
     };
 
@@ -90,7 +94,10 @@ in
 
     gtk.cursorTheme = {
       package = pkgs.quintom-cursor-theme;
-      name = if (config.stylix.polarity == "light") then "Quintom_Ink" else "Quintom_Snow";
+      name =
+        if (config.stylix.polarity == "light")
+        then "Quintom_Ink"
+        else "Quintom_Snow";
       size = 36;
     };
 
@@ -98,7 +105,7 @@ in
       enable = true;
       configType = "hyprlang";
       package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-      plugins = [ ];
+      plugins = [];
       settings = {
         env = [
           "AQ_DRM_DEVICES,${config.home.sessionVariables.AQ_DRM_DEVICES}"
@@ -132,10 +139,9 @@ in
           layout = "master";
           border_size = 0;
           "col.active_border" =
-            if performance then
-              "0xff${config.lib.stylix.colors.base0B}"
-            else
-              "0xff${config.lib.stylix.colors.base08} 0xff${config.lib.stylix.colors.base09} 0xff${config.lib.stylix.colors.base0A} 0xff${config.lib.stylix.colors.base0B} 0xff${config.lib.stylix.colors.base0C} 0xff${config.lib.stylix.colors.base0D} 0xff${config.lib.stylix.colors.base0E} 0xff${config.lib.stylix.colors.base0F} 270deg";
+            if performance
+            then "0xff${config.lib.stylix.colors.base0B}"
+            else "0xff${config.lib.stylix.colors.base08} 0xff${config.lib.stylix.colors.base09} 0xff${config.lib.stylix.colors.base0A} 0xff${config.lib.stylix.colors.base0B} 0xff${config.lib.stylix.colors.base0C} 0xff${config.lib.stylix.colors.base0D} 0xff${config.lib.stylix.colors.base0E} 0xff${config.lib.stylix.colors.base0F} 270deg";
           "col.inactive_border" = "0xff${config.lib.stylix.colors.base02}";
           resize_on_border = true;
           gaps_in = 14;
@@ -155,22 +161,25 @@ in
 
         decoration = {
           shadow = {
-            enabled = (!performance);
+            enabled = !performance;
           };
           rounding = 0;
           dim_special = 0.0;
           dim_inactive = true;
           dim_strength = 0.15;
           blur = {
-            enabled = (!performance);
+            enabled = !performance;
             size = 10;
             passes = 3;
             ignore_opacity = true;
             contrast = 1.17;
-            brightness = (if (config.stylix.polarity == "dark") then "0.65" else "1.45");
-            xray = (!performance);
-            special = (!performance);
-            popups = (!performance);
+            brightness =
+              if (config.stylix.polarity == "dark")
+              then "0.65"
+              else "1.45";
+            xray = !performance;
+            special = !performance;
+            popups = !performance;
           };
         };
 
@@ -198,7 +207,7 @@ in
         ];
 
         animations = {
-          enabled = (!performance);
+          enabled = !performance;
           animation = lib.optionals (!performance) [
             "windowsIn, 1, 6, winIn, popin"
             "windowsOut, 1, 5, winOut, popin"
@@ -338,84 +347,84 @@ in
           "SUPERSHIFT,X,exec,fnottctl dismiss all"
         ];
 
-        windowrulev2 = [
-          "float,class:^(scratch_term)$"
-          "size 80% 85%,class:^(scratch_term)$"
-          "workspace special:scratch_term silent ,class:^(scratch_term)$"
-          "center,class:^(scratch_term)$"
-          "float,class:^(float_term)$"
-          "center,class:^(float_term)$"
-          "float,class:^(scratch_yazi)$"
-          "size 80% 85%,class:^(scratch_yazi)$"
-          "workspace special:scratch_yazi silent,class:^(scratch_yazi)$"
-          "center,class:^(scratch_yazi)$"
-          "float,class:^(filechoose_yazi)$"
-          "size 80% 85%,class:^(filechoose_yazi)$"
-          "center,class:^(filechoose_yazi)$"
-          "float,class:^(scratch_numbat)$"
-          "size 80% 85%,class:^(scratch_numbat)$"
-          "workspace special:scratch_numbat silent,class:^(scratch_numbat)$"
-          "center,class:^(scratch_numbat)$"
-          "float,class:^(scratch_btm)$"
-          "size 80% 85%,class:^(scratch_btm)$"
-          "workspace special:scratch_btm silent,class:^(scratch_btm)$"
-          "center,class:^(scratch_btm)$"
+        windowrulev2 =
+          [
+            "float,class:^(scratch_term)$"
+            "size 80% 85%,class:^(scratch_term)$"
+            "workspace special:scratch_term silent ,class:^(scratch_term)$"
+            "center,class:^(scratch_term)$"
+            "float,class:^(float_term)$"
+            "center,class:^(float_term)$"
+            "float,class:^(scratch_yazi)$"
+            "size 80% 85%,class:^(scratch_yazi)$"
+            "workspace special:scratch_yazi silent,class:^(scratch_yazi)$"
+            "center,class:^(scratch_yazi)$"
+            "float,class:^(filechoose_yazi)$"
+            "size 80% 85%,class:^(filechoose_yazi)$"
+            "center,class:^(filechoose_yazi)$"
+            "float,class:^(scratch_numbat)$"
+            "size 80% 85%,class:^(scratch_numbat)$"
+            "workspace special:scratch_numbat silent,class:^(scratch_numbat)$"
+            "center,class:^(scratch_numbat)$"
+            "float,class:^(scratch_btm)$"
+            "size 80% 85%,class:^(scratch_btm)$"
+            "workspace special:scratch_btm silent,class:^(scratch_btm)$"
+            "center,class:^(scratch_btm)$"
 
-          "float,class:^(discord)$"
-          "size 85% 90%,class:^(discord)$"
-          "workspace special:scratch_chat silent,class:^(discord)$"
-          "center,class:^(discord)$"
-          "float,class:^(io\\.github\\.kukuruzka165\\.materialgram)$"
-          "size 85% 90%,class:^(io\\.github\\.kukuruzka165\\.materialgram)$"
-          "workspace special:scratch_chat silent,class:^(io\\.github\\.kukuruzka165\\.materialgram)$"
-          "center,class:^(io\\.github\\.kukuruzka165\\.materialgram)$"
-          "float,title:^(Save to Disk)$"
-          "size 70% 75%,title:^(Save to Disk)$"
-          "center,title:^(Save to Disk)$"
-          "float,class:^(pokefinder)$"
-          "float,class:^(Waydroid)$"
-          "float,title:(Blender Render)"
-          "size 86% 85%,title:(Blender Render)"
-          "center,title:(Blender Render)"
-          "float,class:^(libresprite)$"
-          "float,title:(Open Images)"
-          "size 86% 85%,title:(Open Images)"
-          "center,title:(Open Images)"
-          "float,title:(Create new document)"
-          "size 86% 85%,title:(Create new document)"
-          "center,title:(Create new document)"
-          "size 86% 85%,title:(Create new document)"
-          "float,title:(Create New Node)"
-          "size 70% 70%,title:(Create New Node)"
-          "center,title:(Create New Node)"
-          "float,title:(Resource)"
-          "size 70% 70%,title:(Resource)"
-          "center,title:(Resource)"
-          "tile,title:(Godot)"
-          "float,title:^(Unlock Database - KeePassXC)$"
-          "size 80% 85%,title:^(Unlock Database - KeePassXC)$"
-          "center,title:^(Unlock Database - KeepassXC)$"
-          "fullscreen,title:^(Steam Big Picture Mode)$"
-          "fullscreen,class:^(xfreerdp)$"
-        ]
-        ++ lib.optionals (!performance) [
-          "opacity 0.80,class:^(dev.zed.Zed)$"
-          "opacity 0.80,class:^(org.pulseaudio.pavucontrol)$"
-          "opacity 1.0,class:^(org.qutebrowser.qutebrowser),fullscreen:1"
+            "float,class:^(discord)$"
+            "size 85% 90%,class:^(discord)$"
+            "workspace special:scratch_chat silent,class:^(discord)$"
+            "center,class:^(discord)$"
+            "float,class:^(io\\.github\\.kukuruzka165\\.materialgram)$"
+            "size 85% 90%,class:^(io\\.github\\.kukuruzka165\\.materialgram)$"
+            "workspace special:scratch_chat silent,class:^(io\\.github\\.kukuruzka165\\.materialgram)$"
+            "center,class:^(io\\.github\\.kukuruzka165\\.materialgram)$"
+            "float,title:^(Save to Disk)$"
+            "size 70% 75%,title:^(Save to Disk)$"
+            "center,title:^(Save to Disk)$"
+            "float,class:^(pokefinder)$"
+            "float,class:^(Waydroid)$"
+            "float,title:(Blender Render)"
+            "size 86% 85%,title:(Blender Render)"
+            "center,title:(Blender Render)"
+            "float,class:^(libresprite)$"
+            "float,title:(Open Images)"
+            "size 86% 85%,title:(Open Images)"
+            "center,title:(Open Images)"
+            "float,title:(Create new document)"
+            "size 86% 85%,title:(Create new document)"
+            "center,title:(Create new document)"
+            "size 86% 85%,title:(Create new document)"
+            "float,title:(Create New Node)"
+            "size 70% 70%,title:(Create New Node)"
+            "center,title:(Create New Node)"
+            "float,title:(Resource)"
+            "size 70% 70%,title:(Resource)"
+            "center,title:(Resource)"
+            "tile,title:(Godot)"
+            "float,title:^(Unlock Database - KeePassXC)$"
+            "size 80% 85%,title:^(Unlock Database - KeePassXC)$"
+            "center,title:^(Unlock Database - KeepassXC)$"
+            "fullscreen,title:^(Steam Big Picture Mode)$"
+            "fullscreen,class:^(xfreerdp)$"
+          ]
+          ++ lib.optionals (!performance) [
+            "opacity 0.80,class:^(dev.zed.Zed)$"
+            "opacity 0.80,class:^(org.pulseaudio.pavucontrol)$"
+            "opacity 1.0,class:^(org.qutebrowser.qutebrowser),fullscreen:1"
 
-          "opacity 0.63,class:^(discord)$"
-          "opacity 0.63,class:^(io\\.github\\.kukuruzka165\\.materialgram)$"
-          "opacity 0.80,class:^(Logseq)$"
-          "opacity 0.73,class:^(Brave-browser),fullscreen:1"
-          "opacity 1.0,class:^(librewolf),fullscreen:1"
-          "opacity 0.73,title:^(My Local Dashboard Awesome Homepage - qutebrowser)$"
-          "opacity 0.80,title:\[.*\] - My Local Dashboard Awesome Homepage"
-          "opacity 0.80,class:^(org.keepassxc.KeePassXC)$"
-          "opacity 0.80,class:^(org.gnome.Nautilus)$"
-          "opacity 0.80,class:^(org.gnome.Nautilus)$"
-          "opacity 0.80,initialTitle:^(Notes)$,initialClass:^(Brave-browser)$"
-
-        ];
+            "opacity 0.63,class:^(discord)$"
+            "opacity 0.63,class:^(io\\.github\\.kukuruzka165\\.materialgram)$"
+            "opacity 0.80,class:^(Logseq)$"
+            "opacity 0.73,class:^(Brave-browser),fullscreen:1"
+            "opacity 1.0,class:^(librewolf),fullscreen:1"
+            "opacity 0.73,title:^(My Local Dashboard Awesome Homepage - qutebrowser)$"
+            "opacity 0.80,title:\[.*\] - My Local Dashboard Awesome Homepage"
+            "opacity 0.80,class:^(org.keepassxc.KeePassXC)$"
+            "opacity 0.80,class:^(org.gnome.Nautilus)$"
+            "opacity 0.80,class:^(org.gnome.Nautilus)$"
+            "opacity 0.80,initialTitle:^(Notes)$,initialClass:^(Brave-browser)$"
+          ];
 
         layerrule = lib.optionals (!performance) [
           "blur,waybar"
@@ -458,9 +467,8 @@ in
           no_update_news = true;
           no_donation_nag = true;
         };
-
       };
-      systemd.variables = [ "--all" ];
+      systemd.variables = ["--all"];
       xwayland = {
         enable = true;
       };
@@ -468,8 +476,7 @@ in
     };
 
     home.packages = (
-      with pkgs;
-      [
+      with pkgs; [
         qpwgraph
         networkmanagerapplet
         hyprland-monitor-attached
@@ -478,9 +485,11 @@ in
         killall
         polkit_gnome
         (pkgs-stable.ashell.overrideAttrs (o: {
-          patches = (o.patches or [ ]) ++ [
-            ./ashell.patch
-          ];
+          patches =
+            (o.patches or [])
+            ++ [
+              ./ashell.patch
+            ];
         }))
         nwg-launchers
         (lib.hiPrio papirus-icon-theme)
@@ -692,7 +701,11 @@ in
       [appearance]
       scale_factor = 1.25
       style = "Solid"
-      opacity = ${if performance then "1.0" else "0.7"}
+      opacity = ${
+        if performance
+        then "1.0"
+        else "0.7"
+      }
       background_color = "#${config.lib.stylix.colors.base00}88"
       primary_color = "#${config.lib.stylix.colors.base0A}"
       secondary_color = "#${config.lib.stylix.colors.base01}"
@@ -702,7 +715,11 @@ in
       workspace_colors = [ "#${config.lib.stylix.colors.base0B}", "#${config.lib.stylix.colors.base0B}" ]
       specialWorkspaceColors = [ "#${config.lib.stylix.colors.base0B}", "#${config.lib.stylix.colors.base0B}" ]
       [appearance.menu]
-      opacity = ${if performance then "1.0" else "0.7"}
+      opacity = ${
+        if performance
+        then "1.0"
+        else "0.7"
+      }
       backdrop = 0.0
     '';
     home.file.".config/hypr/hypridle.conf".text = ''
@@ -807,7 +824,13 @@ in
         terminal = "${pkgs.alacritty}/bin/alacritty";
       };
       colors = {
-        background = config.lib.stylix.colors.base00 + (if performance then "ff" else "bf");
+        background =
+          config.lib.stylix.colors.base00
+          + (
+            if performance
+            then "ff"
+            else "bf"
+          );
         text = config.lib.stylix.colors.base07 + "ff";
         match = config.lib.stylix.colors.base05 + "ff";
         selection = config.lib.stylix.colors.base08 + "ff";
@@ -866,6 +889,5 @@ in
         fit_mode = cover
       }
     '';
-
   };
 }

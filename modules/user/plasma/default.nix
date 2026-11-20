@@ -3,18 +3,16 @@
   lib,
   inputs,
   ...
-}:
-let
+}: let
   cfg = config.userSettings.plasma;
-in
-{
+in {
   options = {
     userSettings.plasma = {
       enable = lib.mkEnableOption "Enable plasma with config";
     };
   };
 
-  imports = [ inputs.plasma-manager.homeModules.plasma-manager ];
+  imports = [inputs.plasma-manager.homeModules.plasma-manager];
 
   config = lib.mkIf cfg.enable {
     stylix.targets.gtk.enable = lib.mkForce false;
@@ -33,7 +31,7 @@ in
         wallpaper = builtins.toString config.stylix.image;
       };
       shortcuts = {
-        "ActivityManager"."switch-to-activity-080837e2-f10a-45f7-84cb-a3022c9dc5d4" = [ ];
+        "ActivityManager"."switch-to-activity-080837e2-f10a-45f7-84cb-a3022c9dc5d4" = [];
         "KDE Keyboard Layout Switcher"."Switch to Last-Used Keyboard Layout" = "Meta+Alt+L";
         "KDE Keyboard Layout Switcher"."Switch to Next Keyboard Layout" = "Meta+Alt+K";
         "kaccess"."Toggle Screen Reader On and Off" = "Meta+Alt+S";
@@ -43,7 +41,7 @@ in
           "Touchpad Toggle,Touchpad Toggle"
           "Meta+Ctrl+Zenkaku Hankaku"
         ];
-        "khotkeys"."{d03619b6-9b3c-48cc-9d9c-a2aadb485550}" = [ ];
+        "khotkeys"."{d03619b6-9b3c-48cc-9d9c-a2aadb485550}" = [];
         "kmix"."decrease_microphone_volume" = "Microphone Volume Down";
         "kmix"."decrease_volume" = "Volume Down";
         "kmix"."decrease_volume_small" = "Shift+Volume Down";
@@ -64,14 +62,14 @@ in
         ];
         "ksmserver"."Log Out" = "Ctrl+Alt+Del";
         "ksmserver"."Log Out Without Confirmation" = "none,,Log Out Without Confirmation";
-        "ksmserver"."LogOut" = [ ];
+        "ksmserver"."LogOut" = [];
         "ksmserver"."Reboot" = "none,,Reboot";
         "ksmserver"."Reboot Without Confirmation" = "none,,Reboot Without Confirmation";
         "ksmserver"."Shut Down" = "none,,Shut Down";
         "kwin"."Activate Window Demanding Attention" = "Meta+Ctrl+A";
         "kwin"."Cube" = "Meta+C,none,Toggle Cube";
-        "kwin"."Cycle Overview" = [ ];
-        "kwin"."Cycle Overview Opposite" = [ ];
+        "kwin"."Cycle Overview" = [];
+        "kwin"."Cycle Overview Opposite" = [];
         "kwin"."Decrease Opacity" = "none,,Decrease Opacity of Active Window by 5%";
         "kwin"."Edit Tiles" = "Meta+T";
         "kwin"."Expose" = "Ctrl+F9";
@@ -81,20 +79,20 @@ in
           "Launch (C),Toggle Present Windows (All desktops)"
         ];
         "kwin"."ExposeClass" = "Ctrl+F7";
-        "kwin"."ExposeClassCurrentDesktop" = [ ];
+        "kwin"."ExposeClassCurrentDesktop" = [];
         "kwin"."Grid View" = "Meta+G";
         "kwin"."Increase Opacity" = "none,,Increase Opacity of Active Window by 5%";
         "kwin"."Invert" = "Meta+Ctrl+I";
-        "kwin"."Invert Screen Colors" = [ ];
+        "kwin"."Invert Screen Colors" = [];
         "kwin"."InvertWindow" = "Meta+Ctrl+U";
         "kwin"."Kill Window" = "Meta+Ctrl+Esc";
-        "kwin"."Move Tablet to Next Output" = [ ];
+        "kwin"."Move Tablet to Next Output" = [];
         "kwin"."MoveMouseToCenter" = "Meta+F6";
         "kwin"."MoveMouseToFocus" = "Meta+F5";
-        "kwin"."MoveZoomDown" = [ ];
-        "kwin"."MoveZoomLeft" = [ ];
-        "kwin"."MoveZoomRight" = [ ];
-        "kwin"."MoveZoomUp" = [ ];
+        "kwin"."MoveZoomDown" = [];
+        "kwin"."MoveZoomLeft" = [];
+        "kwin"."MoveZoomRight" = [];
+        "kwin"."MoveZoomUp" = [];
         "kwin"."Overview" = "Meta+W";
         "kwin"."Setup Window Shortcut" = "none,,Setup Window Shortcut";
         "kwin"."Show Desktop" = "Meta+D";
@@ -144,13 +142,13 @@ in
         "kwin"."Switch to Screen Below" = "none,,Switch to Screen Below";
         "kwin"."Switch to Screen to the Left" = "none,,Switch to Screen to the Left";
         "kwin"."Switch to Screen to the Right" = "none,,Switch to Screen to the Right";
-        "kwin"."Toggle" = [ ];
-        "kwin"."Toggle Night Color" = [ ];
+        "kwin"."Toggle" = [];
+        "kwin"."Toggle Night Color" = [];
         "kwin"."Toggle Window Raise/Lower" = "none,,Toggle Window Raise/Lower";
-        "kwin"."Walk Through Desktop List" = [ ];
-        "kwin"."Walk Through Desktop List (Reverse)" = [ ];
-        "kwin"."Walk Through Desktops" = [ ];
-        "kwin"."Walk Through Desktops (Reverse)" = [ ];
+        "kwin"."Walk Through Desktop List" = [];
+        "kwin"."Walk Through Desktop List (Reverse)" = [];
+        "kwin"."Walk Through Desktops" = [];
+        "kwin"."Walk Through Desktops (Reverse)" = [];
         "kwin"."Walk Through Windows" = "Alt+Tab";
         "kwin"."Walk Through Windows (Reverse)" =
           "Alt+Shift+Backtab,Alt+Shift+Tab,Walk Through Windows (Reverse)";
@@ -262,7 +260,7 @@ in
         "org_kde_powerdevil"."PowerOff" = "Power Off";
         "org_kde_powerdevil"."Sleep" = "Sleep";
         "org_kde_powerdevil"."Toggle Keyboard Backlight" = "Keyboard Light On/Off";
-        "org_kde_powerdevil"."Turn Off Screen" = [ ];
+        "org_kde_powerdevil"."Turn Off Screen" = [];
         "org_kde_powerdevil"."powerProfile" = [
           "Battery"
           "Meta+B,Battery"
@@ -288,7 +286,7 @@ in
         "plasmashell"."cycle-panels" = "Meta+Alt+P";
         "plasmashell"."cycleNextAction" = "none,,Next History Item";
         "plasmashell"."cyclePrevAction" = "none,,Previous History Item";
-        "plasmashell"."edit_clipboard" = [ ];
+        "plasmashell"."edit_clipboard" = [];
         "plasmashell"."manage activities" = "Meta+Q";
         "plasmashell"."next activity" = "Meta+Tab,none,Walk through activities";
         "plasmashell"."previous activity" = "Meta+Shift+Tab,none,Walk through activities (Reverse)";

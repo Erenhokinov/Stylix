@@ -5,12 +5,9 @@
   pkgs-stable,
   osConfig,
   ...
-}:
-
-let
+}: let
   cfg = config.userSettings.git;
-in
-{
+in {
   options = {
     userSettings.git = {
       enable = lib.mkEnableOption "Enable git";

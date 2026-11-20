@@ -3,12 +3,9 @@
   config,
   pkgs,
   ...
-}:
-
-let
+}: let
   cfg = config.systemSettings.virtualization.virtualMachines;
-in
-{
+in {
   options = {
     systemSettings.virtualization.virtualMachines = {
       enable = lib.mkEnableOption "Enable qemu virtual machines, distrobox, and waydroid";

@@ -3,12 +3,9 @@
   lib,
   pkgs,
   ...
-}:
-
-let
+}: let
   cfg = config.userSettings.keepass;
-in
-{
+in {
   options = {
     userSettings.keepass = {
       enable = lib.mkEnableOption "Enable keepass password manager";

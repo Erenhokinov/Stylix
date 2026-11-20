@@ -4,11 +4,9 @@
   pkgs,
   pkgs-stable,
   ...
-}:
-let
+}: let
   cfg = config.userSettings.ai;
-in
-{
+in {
   options = {
     userSettings.ai = {
       enable = lib.mkEnableOption "Enable localai";

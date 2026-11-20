@@ -1,9 +1,10 @@
-{ config, lib, ... }:
-
-let
-  cfg = config.systemSettings.powerprofiles;
-in
 {
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.systemSettings.powerprofiles;
+in {
   options = {
     systemSettings.powerprofiles = {
       enable = lib.mkEnableOption "Enable power profiles daemon";

@@ -3,12 +3,9 @@
   lib,
   pkgs,
   ...
-}:
-
-let
+}: let
   cfg = config.userSettings.kitty;
-in
-{
+in {
   options = {
     userSettings.kitty = {
       enable = lib.mkEnableOption "Enable kitty";
@@ -16,7 +13,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = [ pkgs.kitty ];
+    home.packages = [pkgs.kitty];
     programs.kitty.enable = true;
     programs.kitty.settings = {
       background_opacity = lib.mkForce "0.85";

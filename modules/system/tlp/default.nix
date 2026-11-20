@@ -1,9 +1,10 @@
-{ config, lib, ... }:
-
-let
-  cfg = config.systemSettings.tlp;
-in
 {
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.systemSettings.tlp;
+in {
   options = {
     systemSettings.tlp = {
       enable = lib.mkEnableOption "Enable tlp power management";
@@ -55,5 +56,4 @@ in
       };
     };
   };
-
 }
