@@ -1,4 +1,11 @@
-{ config, lib, pkgs, pkgs-stable, inputs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  pkgs-stable,
+  inputs,
+  ...
+}:
 
 {
 
@@ -21,7 +28,6 @@
         docker.enable = false;
         virtualMachines.enable = false;
       };
-      brave.enable = false;
 
       # wm
       hyprland.enable = true;
@@ -44,7 +50,7 @@
       # style
       stylix = {
         enable = true;
-        theme = "ubuntu";
+        theme = "gruvbox-dark-hard";
       };
     };
 
@@ -60,11 +66,12 @@
       enable = true;
       enable32Bit = true;
     };
+
     hardware.nvidia = {
       modesetting.enable = true;
       powerManagement.enable = true;
       powerManagement.finegrained = true;
-      open = false;
+      open = true;
       package = config.boot.kernelPackages.nvidiaPackages.production; # DONT SWITCH TO NEW_FEATURE FOR NOW (NOT CACHED)!!
       prime = {
         offload.enable = true;
@@ -75,9 +82,8 @@
     };
     services.xserver.videoDrivers = [ "nvidia" ];
     services.fprintd.enable = true;
-    services.cloudflare-warp.enable = true;
     services.udev.extraRules = ''
-    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="04f3", ATTR{idProduct}=="0c4f", ATTR{power/control}="on"
+      ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="04f3", ATTR{idProduct}=="0c4f", ATTR{power/control}="on"
     '';
 
     zramSwap = {
@@ -88,38 +94,36 @@
       algorithm = "zstd";
     };
 
-
-  programs.nix-ld = {
-    enable = true;
-    libraries = with pkgs; [ 
-    libGL
-    libx11
-    libxext
-    stdenv.cc.cc.lib
-    zlib
-    openssl
-    libffi
-    glibc
-    libxfixes
-    ];
-  };
+    programs.nix-ld = {
+      enable = true;
+      libraries = with pkgs; [
+        libGL
+        libx11
+        libxext
+        stdenv.cc.cc.lib
+        zlib
+        openssl
+        libffi
+        glibc
+        libxfixes
+      ];
+    };
 
     nixpkgs.config = {
-    allowUnfree = true;
-    # only build CUDA binaries for the GTX 1650 (sm_75)
-    cudaCapabilities = [ "7.5" ];
-    permittedInsecurePackages = [ "qutebrowser-3.7.0" ];
-    problems.handlers.cups.broken = "warn";
-   };
+      allowUnfree = true;
+      cudaCapabilities = [ "7.5" ];
+      permittedInsecurePackages = [ "qutebrowser-3.7.0" ];
+      problems.handlers.cups.broken = "ignore";
+    };
 
     hardware.firmware = [
-      (pkgs.runCommand "100hz-edid" {} ''
+      (pkgs.runCommand "100hz-edid" { } ''
         mkdir -p $out/lib/firmware/edid
         cp ${./100hz.bin} $out/lib/firmware/edid/100hz.bin
       '')
     ];
 
-    boot.supportedFilesystems =  ["ntfs"];
+    boot.supportedFilesystems = [ "ntfs" ];
     boot.kernelParams = [
       "drm.edid_firmware=eDP-1:edid/100hz.bin"
       "usbhid.mousepoll=1"

@@ -1,8 +1,14 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.userSettings.japanese;
-in {
+in
+{
   options = {
     userSettings.japanese = {
       enable = lib.mkEnableOption "Enable Japanese input";
@@ -34,34 +40,34 @@ in {
       EnumerateSkipFirst=False
       # Toggle embedded preedit
       TogglePreedit=
-  
+
       [Hotkey/TriggerKeys]
       0=Super+comma
-  
+
       [Hotkey/EnumerateGroupForwardKeys]
       0=Super+space
-  
+
       [Hotkey/EnumerateGroupBackwardKeys]
       0=Shift+Super+space
-  
+
       [Hotkey/ActivateKeys]
       0=Hangul_Hanja
-  
+
       [Hotkey/DeactivateKeys]
       0=Hangul_Romaja
-  
+
       [Hotkey/PrevPage]
       0=Up
-  
+
       [Hotkey/NextPage]
       0=Down
-  
+
       [Hotkey/PrevCandidate]
       0=Shift+Tab
-  
+
       [Hotkey/NextCandidate]
       0=Tab
-  
+
       [Behavior]
       # Active By Default
       ActiveByDefault=False
@@ -96,29 +102,29 @@ in {
       # Interval of saving user data in minutes
       AutoSavePeriod=30
     '';
-#   home.file.".config/fcitx5/profile".text = ''
-#     [Groups/0]
-#     # Group Name
-#     Name=Default
-#     # Layout
-#     Default Layout=us
-#     # Default Input Method
-#     DefaultIM=mozc
-#     
-#     [Groups/0/Items/0]
-#     # Name
-#     Name=keyboard-us
-#     # Layout
-#     Layout=
-#     
-#     [Groups/0/Items/1]
-#     # Name
-#     Name=mozc
-#     # Layout
-#     Layout=
-#     
-#     [GroupOrder]
-#     0=Default
-#     '';
+    #   home.file.".config/fcitx5/profile".text = ''
+    #     [Groups/0]
+    #     # Group Name
+    #     Name=Default
+    #     # Layout
+    #     Default Layout=us
+    #     # Default Input Method
+    #     DefaultIM=mozc
+    #
+    #     [Groups/0/Items/0]
+    #     # Name
+    #     Name=keyboard-us
+    #     # Layout
+    #     Layout=
+    #
+    #     [Groups/0/Items/1]
+    #     # Name
+    #     Name=mozc
+    #     # Layout
+    #     Layout=
+    #
+    #     [GroupOrder]
+    #     0=Default
+    #     '';
   };
 }

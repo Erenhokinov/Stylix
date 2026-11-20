@@ -212,16 +212,16 @@ in
           ];
         };
 
-       input = {
-       kb_layout = "us,ru";
-       kb_options = "grp:alt_shift_toggle";
-       repeat_delay = 450;
-       repeat_rate = 50;
-       force_no_accel = true;
-       accel_profile = "flat";
-       follow_mouse = 1;
-       float_switch_override_focus = 0;
-       };
+        input = {
+          kb_layout = "us,ru";
+          kb_options = "grp:alt_shift_toggle";
+          repeat_delay = 450;
+          repeat_rate = 50;
+          force_no_accel = true;
+          accel_profile = "flat";
+          follow_mouse = 1;
+          float_switch_override_focus = 0;
+        };
         binds = {
           movefocus_cycles_fullscreen = false;
         };
@@ -241,7 +241,7 @@ in
           "SUPERSHIFT,T,exec,screenshot-ocr"
           "CTRLALT,Delete,exec,hyprctl kill"
           "SUPERSHIFT,K,exec,hyprctl kill"
-	  "SUPER,D,exec,vesktop"
+          "SUPER,D,exec,discord"
           "SUPER,M,exec,materialgram"
           "SUPER,R,pass,^(com\.obsproject\.Studio)$"
           "SUPERSHIFT,R,pass,^(com\.obsproject\.Studio)$"
@@ -361,10 +361,10 @@ in
           "workspace special:scratch_btm silent,class:^(scratch_btm)$"
           "center,class:^(scratch_btm)$"
 
-          "float,class:^(vesktop)$"
-          "size 85% 90%,class:^(vesktop)$"
-          "workspace special:scratch_chat silent,class:^(vesktop)$"
-          "center,class:^(vesktop)$"
+          "float,class:^(discord)$"
+          "size 85% 90%,class:^(discord)$"
+          "workspace special:scratch_chat silent,class:^(discord)$"
+          "center,class:^(discord)$"
           "float,class:^(io\\.github\\.kukuruzka165\\.materialgram)$"
           "size 85% 90%,class:^(io\\.github\\.kukuruzka165\\.materialgram)$"
           "workspace special:scratch_chat silent,class:^(io\\.github\\.kukuruzka165\\.materialgram)$"
@@ -403,7 +403,7 @@ in
           "opacity 0.80,class:^(org.pulseaudio.pavucontrol)$"
           "opacity 1.0,class:^(org.qutebrowser.qutebrowser),fullscreen:1"
 
-          "opacity 0.63,class:^(vesktop)$"
+          "opacity 0.63,class:^(discord)$"
           "opacity 0.63,class:^(io\\.github\\.kukuruzka165\\.materialgram)$"
           "opacity 0.80,class:^(Logseq)$"
           "opacity 0.73,class:^(Brave-browser),fullscreen:1"

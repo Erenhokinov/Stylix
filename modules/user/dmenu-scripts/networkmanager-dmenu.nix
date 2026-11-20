@@ -1,15 +1,23 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.userSettings.dmenuScripts;
   dmenuCmd = cfg.dmenuCmd;
-in {
+in
+{
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [ networkmanager_dmenu ];
 
     home.file.".config/networkmanager-dmenu/config.ini".text = ''
       [dmenu]
-      dmenu_command = ''+dmenuCmd+''
+      dmenu_command = ''
+    + dmenuCmd
+    + ''
 
       compact = True
       wifi_chars = ▂▄▆█

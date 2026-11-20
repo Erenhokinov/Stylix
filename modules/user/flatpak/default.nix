@@ -1,8 +1,14 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.userSettings.flatpak;
-in {
+in
+{
   options = {
     userSettings.flatpak = {
       enable = lib.mkEnableOption "Enable flatpak support";

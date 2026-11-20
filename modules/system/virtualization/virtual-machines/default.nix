@@ -1,7 +1,14 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
-let cfg = config.systemSettings.virtualization.virtualMachines;
-in {
+let
+  cfg = config.systemSettings.virtualization.virtualMachines;
+in
+{
   options = {
     systemSettings.virtualization.virtualMachines = {
       enable = lib.mkEnableOption "Enable qemu virtual machines, distrobox, and waydroid";
@@ -9,7 +16,10 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ virt-manager distrobox ];
+    environment.systemPackages = with pkgs; [
+      virt-manager
+      distrobox
+    ];
     virtualisation.libvirtd = {
       allowedBridges = [
         "nm-bridge"

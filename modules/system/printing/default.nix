@@ -1,8 +1,14 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 let
   cfg = config.systemSettings.printing;
-in {
+in
+{
   options = {
     systemSettings.printing = {
       enable = lib.mkEnableOption "Enable printing";

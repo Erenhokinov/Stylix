@@ -1,7 +1,13 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.userSettings.vscodium;
-in {
+in
+{
   options = {
     userSettings.vscodium = {
       enable = lib.mkEnableOption "Enable vscodium";
@@ -13,12 +19,13 @@ in {
       enable = true;
       package = pkgs.vscodium;
       profiles.default.extensions = with pkgs.vscode-extensions; [
-          vscodevim.vim
-          kahole.magit
-          jnoortheen.nix-ide
-          mkhl.direnv
-          geequlim.godot-tools
-          yzhang.markdown-all-in-one
+        vscodevim.vim
+        kahole.magit
+        jnoortheen.nix-ide
+        leonardssh.vscord
+        mkhl.direnv
+        geequlim.godot-tools
+        yzhang.markdown-all-in-one
       ];
       profiles.default.mutableUserSettings = true;
       profiles.default.userSettings = {
@@ -26,18 +33,22 @@ in {
       };
       profiles.default.keybindings = [
         {
-           "key" = "g g";
-           "command" = "cursorTop";
-           "when" = "editorTextFocus && editorLangId == 'magit' && vim.mode =~ /^(?!SearchInProgressMode|CommandlineInProgress).*$/" ;
+          "key" = "g g";
+          "command" = "cursorTop";
+          "when" =
+            "editorTextFocus && editorLangId == 'magit' && vim.mode =~ /^(?!SearchInProgressMode|CommandlineInProgress).*$/";
         }
-        { "key" = "g r";
-           "command" = "magit.refresh";
-           "when" = "editorTextFocus && editorLangId == 'magit' && vim.mode =~ /^(?!SearchInProgressMode|CommandlineInProgress).*$/" ;
+        {
+          "key" = "g r";
+          "command" = "magit.refresh";
+          "when" =
+            "editorTextFocus && editorLangId == 'magit' && vim.mode =~ /^(?!SearchInProgressMode|CommandlineInProgress).*$/";
         }
         {
           "key" = "tab";
           "command" = "extension.vim_tab";
-          "when" = "editorTextFocus && vim.active && !inDebugRepl && vim.mode != 'Insert' && editorLangId != 'magit'";
+          "when" =
+            "editorTextFocus && vim.active && !inDebugRepl && vim.mode != 'Insert' && editorLangId != 'magit'";
         }
         {
           "key" = "tab";
@@ -46,7 +57,8 @@ in {
         {
           "key" = "x";
           "command" = "magit.discard-at-point";
-          "when" = "editorTextFocus && editorLangId == 'magit' && vim.mode =~ /^(?!SearchInProgressMode|CommandlineInProgress).*$/";
+          "when" =
+            "editorTextFocus && editorLangId == 'magit' && vim.mode =~ /^(?!SearchInProgressMode|CommandlineInProgress).*$/";
         }
         {
           "key" = "k";
@@ -55,7 +67,8 @@ in {
         {
           "key" = "-";
           "command" = "magit.reverse-at-point";
-          "when" = "editorTextFocus && editorLangId == 'magit' && vim.mode =~ /^(?!SearchInProgressMode|CommandlineInProgress).*$/";
+          "when" =
+            "editorTextFocus && editorLangId == 'magit' && vim.mode =~ /^(?!SearchInProgressMode|CommandlineInProgress).*$/";
         }
         {
           "key" = "v";
@@ -64,7 +77,8 @@ in {
         {
           "key" = "shift+-";
           "command" = "magit.reverting";
-          "when" = "editorTextFocus && editorLangId == 'magit' && vim.mode =~ /^(?!SearchInProgressMode|CommandlineInProgress).*$/";
+          "when" =
+            "editorTextFocus && editorLangId == 'magit' && vim.mode =~ /^(?!SearchInProgressMode|CommandlineInProgress).*$/";
         }
         {
           "key" = "shift+v";
@@ -73,7 +87,8 @@ in {
         {
           "key" = "shift+o";
           "command" = "magit.resetting";
-          "when" = "editorTextFocus && editorLangId == 'magit' && vim.mode =~ /^(?!SearchInProgressMode|CommandlineInProgress).*$/";
+          "when" =
+            "editorTextFocus && editorLangId == 'magit' && vim.mode =~ /^(?!SearchInProgressMode|CommandlineInProgress).*$/";
         }
         {
           "key" = "shift+x";
@@ -92,5 +107,5 @@ in {
 
     };
     stylix.targets.vscodium.enable = true;
-    };
+  };
 }

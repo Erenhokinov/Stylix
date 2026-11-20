@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.userSettings.media;
@@ -31,7 +36,8 @@ let
       exec ${lib.getExe (pkgs.mpv.override { yt-dlp = yt-dlp-fresh; })} "$@"
     '';
   };
-in {
+in
+{
   options = {
     userSettings.media = {
       enable = lib.mkEnableOption "Enable media playback apps";

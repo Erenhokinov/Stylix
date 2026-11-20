@@ -1,5 +1,5 @@
 {
-  description = "Flake of LibrePhoenix";
+  description = "Flake of Erenhokinov";
 
   outputs =
     inputs@{ self, nix-flatpak, ... }:
@@ -19,8 +19,6 @@
       };
 
       # configure pkgs
-      # use nixpkgs if running a server (homelab or worklab profile)
-      # otherwise use patched nixos-unstable nixpkgs
       pkgs = import nixpkgs-patched {
         inherit system;
         config = {
@@ -79,7 +77,7 @@
                 home-manager.extraSpecialArgs = {
                   inherit pkgs;
                   inherit pkgs-stable;
-		  inherit nix-flatpak;
+                  inherit nix-flatpak;
                   inherit inputs;
                 };
               }
@@ -102,7 +100,10 @@
     chaotic.url = "github:chaotic-cx/nyx";
     prismlauncher-cracked.url = "github:Diegiwg/PrismLauncher-Cracked";
     wayvibes.url = "github:sahaj-b/wayvibes";
+    stylix.url = "github:nix-community/stylix";
     nix-devin-cli.url = "github:broady/nix-devin-cli";
+    nixcord.url = "github:4evy/nixcord";
+
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
     wayvibes.inputs.nixpkgs.follows = "nixpkgs";
@@ -124,8 +125,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
-
-    stylix.url = "github:nix-community/stylix";
 
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";

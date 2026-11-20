@@ -1,10 +1,17 @@
-{ pkgs, python3Packages, fetchPypi, lib }:
+{
+  pkgs,
+  python3Packages,
+  fetchPypi,
+  lib,
+}:
 
 let
   torch = python3Packages.torch-bin;
   torchaudio = python3Packages.torchaudio-bin;
 
-  mir-eval = python3Packages.mir-eval.overridePythonAttrs (old: { doCheck = false; });
+  mir-eval = python3Packages.mir-eval.overridePythonAttrs (old: {
+    doCheck = false;
+  });
 
   moduleconf = python3Packages.buildPythonPackage rec {
     pname = "moduleconf";
@@ -43,7 +50,10 @@ let
       dist = "py3";
       python = "py3";
     };
-    propagatedBuildInputs = [ torch pytorch-ranger ];
+    propagatedBuildInputs = [
+      torch
+      pytorch-ranger
+    ];
     doCheck = false;
   };
 
@@ -58,7 +68,10 @@ let
       python = "py3";
     };
     propagatedBuildInputs = with python3Packages; [
-      numpy mido six importlib-resources
+      numpy
+      mido
+      six
+      importlib-resources
     ];
     doCheck = false;
   };
@@ -71,7 +84,12 @@ let
       inherit pname version;
       hash = "sha256-fRZjSo9X+nllnprn5cxu3R4C1ayw61cSjb7QPp9P3Zw=";
     };
-    nativeBuildInputs = with python3Packages; [ cython setuptools-scm setuptools wheel ];
+    nativeBuildInputs = with python3Packages; [
+      cython
+      setuptools-scm
+      setuptools
+      wheel
+    ];
     propagatedBuildInputs = [ python3Packages.numpy ];
     doCheck = false;
   };
@@ -99,7 +117,20 @@ python3Packages.buildPythonPackage rec {
     python = "py3";
   };
 
+  # pkg_resources was removed from setuptools>=81; transcribe.py only uses it
+  # for resource_filename() to locate the bundled pretrained model files. The
+  # wheel is installed straight from the .whl, so patch the installed file.
+  postInstall = ''
+    f=$(find $out -name transcribe.py | head -1)
+    sed -i \
+      -e 's|^    import pkg_resources$|    from importlib import resources as _res|' \
+      -e 's|pkg_resources.resource_filename(__name__, "pretrained/2.0.pt")|str(_res.files("transkun") / "pretrained" / "2.0.pt")|' \
+      -e 's|pkg_resources.resource_filename(__name__, "pretrained/2.0.conf")|str(_res.files("transkun") / "pretrained" / "2.0.conf")|' \
+      "$f"
+  '';
+
   propagatedBuildInputs = with python3Packages; [
+    setuptools
     scipy
     torch
     torchaudio

@@ -1,8 +1,14 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.userSettings.kitty;
-in {
+in
+{
   options = {
     userSettings.kitty = {
       enable = lib.mkEnableOption "Enable kitty";

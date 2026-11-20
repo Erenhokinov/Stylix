@@ -1,9 +1,15 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.systemSettings.security.doas;
   adminUsers = config.systemSettings.adminUsers;
-in {
+in
+{
   options = {
     systemSettings.security.doas = {
       enable = lib.mkEnableOption "Replace sudo with doas";

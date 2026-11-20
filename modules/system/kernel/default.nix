@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.systemSettings.cachy;
@@ -9,7 +14,14 @@ in
       enable = lib.mkEnableOption "Enable cachyos kernel";
       variant = lib.mkOption {
         default = null;
-        type = lib.types.nullOr (lib.types.enum ["lto" "lts" "server" "hardened"]);
+        type = lib.types.nullOr (
+          lib.types.enum [
+            "lto"
+            "lts"
+            "server"
+            "hardened"
+          ]
+        );
         description = ''
           This option determines the CachyOS kernel variant to use.
         '';

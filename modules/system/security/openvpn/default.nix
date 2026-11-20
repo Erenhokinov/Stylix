@@ -1,8 +1,14 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.systemSettings.security.openvpn;
-in {
+in
+{
   options = {
     systemSettings.security.openvpn = {
       enable = lib.mkEnableOption "Enable openvpn";

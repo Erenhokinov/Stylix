@@ -2,7 +2,8 @@
 
 let
   cfg = config.systemSettings.security.sshd;
-in {
+in
+{
   options = {
     systemSettings.security.sshd = {
       enable = lib.mkEnableOption "Enable incoming ssh connections";

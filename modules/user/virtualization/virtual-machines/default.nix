@@ -1,8 +1,14 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.userSettings.virtualization.virtualMachines;
-in {
+in
+{
   options = {
     userSettings.virtualization.virtualMachines = {
       enable = lib.mkEnableOption "Enable helpful VM apps";

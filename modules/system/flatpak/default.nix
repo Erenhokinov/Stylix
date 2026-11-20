@@ -2,7 +2,8 @@
 
 let
   cfg = config.systemSettings.flatpak;
-in {
+in
+{
   options = {
     systemSettings.flatpak = {
       enable = lib.mkEnableOption "Enable flatpaks";

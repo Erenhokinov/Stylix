@@ -1,8 +1,14 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.userSettings.blender;
-in {
+in
+{
   options = {
     userSettings.blender = {
       enable = lib.mkEnableOption "Enable blender";
@@ -10,14 +16,13 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages =
-      [ pkgs.blender-hip
-        (pkgs.writeScriptBin "declarative-blender-prefs"
-          ''
-          #!/bin/sh
-          ${pkgs.blender-hip}/bin/blender --python ${./applyprefs.py};
-          '')
-      ];
+    home.packages = [
+      pkgs.blender-hip
+      (pkgs.writeScriptBin "declarative-blender-prefs" ''
+        #!/bin/sh
+        ${pkgs.blender-hip}/bin/blender --python ${./applyprefs.py};
+      '')
+    ];
     home.file.".config/declarative-blender-prefs/applyprefs.py".source = ./applyprefs.py;
     home.file.".config/blender/extensions/node_pie.zip".source = builtins.fetchurl {
       url = "https://github.com/strike-digital/node_pie/releases/download/1.2.38/node_pie_1_2_38.zip";

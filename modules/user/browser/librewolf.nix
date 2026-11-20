@@ -1,8 +1,14 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.userSettings.librewolf;
-in {
+in
+{
   options = {
     userSettings.librewolf = {
       enable = lib.mkEnableOption "Enable librewolf browser";
@@ -33,7 +39,7 @@ in {
       pref("privacy.clearOnShutdown.cookies",true);
       pref("gfx.webrender.software.opengl",false);
       pref("webgl.disabled",true);
-      '';
+    '';
 
     xdg.mimeApps.defaultApplications = lib.mkIf (config.userSettings.browser == "librewolf") {
       "text/html" = "librewolf.desktop";

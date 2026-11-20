@@ -1,14 +1,21 @@
-{ pkgs, python3Packages, fetchurl, lib }:
+{
+  pkgs,
+  python3Packages,
+  fetchurl,
+  lib,
+}:
 
 let
-  pythonEnv = python3Packages.python.withPackages (ps: with ps; [
-    pyqt6
-    mido
-    numpy
-    pynput
-    evdev
-    python-rtmidi
-  ]);
+  pythonEnv = python3Packages.python.withPackages (
+    ps: with ps; [
+      pyqt6
+      mido
+      numpy
+      pynput
+      evdev
+      python-rtmidi
+    ]
+  );
 
   src = fetchurl {
     url = "https://github.com/Erenhokinov/Just-a-minute/raw/main/HuMidi-ydotool-patched-midi-sostenuto.zip";

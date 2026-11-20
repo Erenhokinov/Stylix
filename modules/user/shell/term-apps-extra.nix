@@ -1,8 +1,14 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.userSettings.shell.extraApps;
-in {
+in
+{
   options = {
     userSettings.shell.extraApps = {
       enable = lib.mkEnableOption "Add some fun but mostly useless CLI apps";
@@ -13,7 +19,9 @@ in {
     # Fun CLI apps that aren't necessary
     home.packages = with pkgs; [
       # Command Line
-      disfetch lolcat cowsay
+      disfetch
+      lolcat
+      cowsay
       starfetch
       (stdenv.mkDerivation {
         name = "pokemon-colorscripts";
@@ -38,7 +46,7 @@ in {
           homepage = "https://github.com/Admiral-Fish/PokeFinder";
           description = "CLI utility to print out images of pokemon to terminal";
           license = lib.licenses.mit;
-          maintainers = [];
+          maintainers = [ ];
         };
       })
     ];

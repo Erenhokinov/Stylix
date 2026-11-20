@@ -1,8 +1,15 @@
-{ config, lib, pkgs, inputs, osConfig, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  osConfig,
+  ...
+}:
 
 let
   cfg = config.userSettings.stylix;
-  theme = import (./. + "../../../themes"+("/"+config.userSettings.stylix.theme));
+  theme = import (./. + "../../../themes" + ("/" + config.userSettings.stylix.theme));
 in
 {
   options = {
@@ -11,7 +18,11 @@ in
     };
     userSettings.stylix.theme = lib.mkOption {
       default = if (osConfig.stylix.enable) then osConfig.systemSettings.stylix.theme else "io";
-      type = lib.types.enum (builtins.attrNames (lib.filterAttrs (name: type: type == "directory") (builtins.readDir ../../themes)));
+      type = lib.types.enum (
+        builtins.attrNames (
+          lib.filterAttrs (name: type: type == "directory") (builtins.readDir ../../themes)
+        )
+      );
       description = "Theme for stylix to use for the user. A list of themes can be found in the `themes` directory.";
     };
   };
@@ -95,15 +106,10 @@ in
     stylix.targets.kde.enable = true;
     stylix.targets.qt.enable = true;
 
-    stylix.targets.vesktop = {
+    stylix.targets.nixcord = {
       enable = true;
       colors.enable = true;
       fonts.enable = true;
-    };
-
-    programs.vesktop = {
-      enable = true;
-      vencord.mutableSettings = true;
     };
 
     home.file = {
@@ -121,8 +127,11 @@ in
       };
     };
     home.packages = with pkgs; [
-       kdePackages.breeze kdePackages.breeze-icons
-       nerd-fonts.fira-code fira-sans twitter-color-emoji
+      kdePackages.breeze
+      kdePackages.breeze-icons
+      nerd-fonts.fira-code
+      fira-sans
+      twitter-color-emoji
     ];
 
     fonts.fontconfig.defaultFonts = {

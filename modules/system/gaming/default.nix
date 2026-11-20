@@ -1,8 +1,14 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.systemSettings.gaming;
-in {
+in
+{
 
   options = {
     systemSettings.gaming = {
@@ -11,22 +17,31 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "steam" "steam-unwrapped" "steam-jupiter-unwrapped" "steamdeck-hw-theme" "xow_dongle-firmware" ];
+    nixpkgs.config.allowUnfreePredicate =
+      pkg:
+      builtins.elem (lib.getName pkg) [
+        "steam"
+        "steam-unwrapped"
+        "steam-jupiter-unwrapped"
+        "steamdeck-hw-theme"
+        "xow_dongle-firmware"
+      ];
     nixpkgs.config.packageOverrides = pkgs: {
       steam = pkgs.steam.override {
-        extraPkgs = pkgs: with pkgs; [
-          libxcursor
-          libxi
-          libxinerama
-          libxscrnsaver
-          libpng
-          libpulseaudio
-          libvorbis
-          stdenv.cc.cc.lib
-          libkrb5
-          keyutils
-          gamemode
-        ];
+        extraPkgs =
+          pkgs: with pkgs; [
+            libxcursor
+            libxi
+            libxinerama
+            libxscrnsaver
+            libpng
+            libpulseaudio
+            libvorbis
+            stdenv.cc.cc.lib
+            libkrb5
+            keyutils
+            gamemode
+          ];
       };
     };
     hardware.opengl.driSupport32Bit = true;
@@ -49,18 +64,18 @@ in {
         keyutils
       ];
     };
-    environment.systemPackages = with pkgs;
-      [ steam
-        gamemode
-        prismlauncher
-        inotify-tools
-        protonup-qt
-        (pkgs.writeScriptBin "steamgrab" ''chown -R $(pgrep -nf steam | xargs -r ps -o uname= -p):steam /opt/Steam;'')
-        (pkgs.writeScriptBin "steamos-session-select" ''
-          #!/bin/sh
-          steam -shutdown
-        '')
-      ];
+    environment.systemPackages = with pkgs; [
+      steam
+      gamemode
+      prismlauncher
+      inotify-tools
+      protonup-qt
+      (pkgs.writeScriptBin "steamgrab" "chown -R $(pgrep -nf steam | xargs -r ps -o uname= -p):steam /opt/Steam;")
+      (pkgs.writeScriptBin "steamos-session-select" ''
+        #!/bin/sh
+        steam -shutdown
+      '')
+    ];
     programs.gamemode.enable = true;
     programs.gamescope.enable = true;
     programs.gamescope.capSysNice = false;
@@ -76,23 +91,23 @@ in {
         #SDL_VIDEODRIVER = "x11";
       };
       args = [
-       "--xwayland-count 1"
-       #"--expose-wayland"
+        "--xwayland-count 1"
+        #"--expose-wayland"
 
-       "-e" # Enable steam integration
+        "-e" # Enable steam integration
 
-       "--adaptive-sync"
-       "--hdr-enabled"
-       "--hdr-itm-enable"
+        "--adaptive-sync"
+        "--hdr-enabled"
+        "--hdr-itm-enable"
 
-       # External monitor
-       "--fullscreen"
-       "--prefer-output eDP-1"
-       "--output-width 1920"
-       "--output-height 1080"
-       "--nested-width 1920"
-       "--nested-height 1080"
-       "--prefer-vk-device 1002:1638" # lspci -nn | grep VGA
+        # External monitor
+        "--fullscreen"
+        "--prefer-output eDP-1"
+        "--output-width 1920"
+        "--output-height 1080"
+        "--nested-width 1920"
+        "--nested-height 1080"
+        "--prefer-vk-device 1002:1638" # lspci -nn | grep VGA
       ];
     };
     chaotic.hdr.enable = true;
@@ -115,7 +130,10 @@ in {
         Type = "exec";
       };
       serviceConfig = {
-        ExecStart = [ ''/run/current-system/sw/bin/chmod -R 777 /opt/Steam;'' ''/run/current-system/sw/bin/inotifywait -mr -e close_write,create,moved_to,modify /opt/Steam | while /run/current-system/sw/bin/read path file; do /run/current-system/sw/bin/chmod 777 $path/$file; done;'' ];
+        ExecStart = [
+          "/run/current-system/sw/bin/chmod -R 777 /opt/Steam;"
+          "/run/current-system/sw/bin/inotifywait -mr -e close_write,create,moved_to,modify /opt/Steam | while /run/current-system/sw/bin/read path file; do /run/current-system/sw/bin/chmod 777 $path/$file; done;"
+        ];
       };
       wantedBy = [ "graphical.target" ];
     };

@@ -1,8 +1,14 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.userSettings.godot;
-in {
+in
+{
   options = {
     userSettings.godot = {
       enable = lib.mkEnableOption "Enable godot";

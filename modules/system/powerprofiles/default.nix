@@ -2,7 +2,8 @@
 
 let
   cfg = config.systemSettings.powerprofiles;
-in {
+in
+{
   options = {
     systemSettings.powerprofiles = {
       enable = lib.mkEnableOption "Enable power profiles daemon";

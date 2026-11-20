@@ -1,8 +1,14 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.userSettings.shell.apps;
-in {
+in
+{
   options = {
     userSettings.shell.apps = {
       enable = lib.mkEnableOption "Enable a collection of additional useful CLI apps";
@@ -18,9 +24,14 @@ in {
       timer
       brightnessctl
       gnugrep
-      bat eza fd bottom ripgrep
+      bat
+      eza
+      fd
+      bottom
+      ripgrep
       rsync
-      zip unzip
+      zip
+      unzip
       w3m
       pandoc
       hwinfo

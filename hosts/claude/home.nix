@@ -1,14 +1,22 @@
-{ config, lib, pkgs, nix-flatpak, inputs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  nix-flatpak,
+  inputs,
+  ...
+}:
 
 let
   transkun = pkgs.callPackage ../../pkgs/transkun.nix { };
-#  romannow = pkgs.callPackage ../../pkgs/Romanich.nix { };
+  #  romannow = pkgs.callPackage ../../pkgs/Romanich.nix { };
   humidi = pkgs.callPackage ../../pkgs/humidi.nix { };
 in
 {
   imports = [
     inputs.nix-flatpak.homeManagerModules.nix-flatpak
     inputs.spicetify-nix.homeManagerModules.default
+    inputs.nixcord.homeModules.nixcord
     inputs.wayvibes.nixosModules.default
   ];
 
@@ -56,22 +64,25 @@ in
 
     home.packages = [
       transkun
- #     romannow
+      #     romannow
       humidi
       pkgs.sox
     ];
 
     services.flatpak.update.onActivation = true;
     services.flatpak.packages = [
-    { appId = "org.vinegarhq.Sober"; origin = "flathub";  }
-     { appId = "ru.yandex.Browser"; origin = "flathub";  }
-    #tralalelo tralala!
+      {
+        appId = "org.vinegarhq.Sober";
+        origin = "flathub";
+      }
+      #tralalelo tralala!
     ];
 
     programs.spicetify =
       let
         spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.system};
-      in {
+      in
+      {
         enable = true;
         enabledExtensions = with spicePkgs.extensions; [
           adblockify
@@ -80,9 +91,19 @@ in
           copyToClipboard
           history
         ];
-        theme = spicePkgs.themes.comfy;
-        colorScheme = "Hikari";
+        theme = spicePkgs.themes.text;
+        colorScheme = "GruvboxHard";
       };
+
+    programs.nixcord = {
+      enable = true;
+      discord.vencord.enable = true;
+      config.plugins.hideMedia.enable = true;
+      config.plugins.fakeNitro.enable = true;
+      config.plugins.silentTyping.enable = true;
+      config.plugins.spotifyControls.enable = true;
+      config.plugins.crashHandler.enable = true;
+    };
 
     services.wayvibes = {
       enable = true;

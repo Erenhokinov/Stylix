@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.userSettings.hyprland.hyprprofiles;
   dmenuCmd = config.userSettings.dmenuScripts.dmenuCmd;
@@ -33,12 +38,18 @@ in
           fi
         fi
       '')
-      (pkgs.writeScriptBin "hyprprofile-dmenu" ''
-        #!/bin/sh
-        choice="$(\ls ~/.config/hyprprofiles | ''+dmenuCmd+'')";
-        hyprprofile $choice;
-      '')] ++
-      lib.optionals qutebrowserEnabled [
+      (
+        pkgs.writeScriptBin "hyprprofile-dmenu" ''
+          #!/bin/sh
+          choice="$(\ls ~/.config/hyprprofiles | ''
+        + dmenuCmd
+        + ''
+          )";
+                  hyprprofile $choice;
+        ''
+      )
+    ]
+    ++ lib.optionals qutebrowserEnabled [
       (pkgs.writeScriptBin "qutebrowser-hyprprofile" ''
         #!/bin/sh
         profile="$(cat ~/.hyprprofile)"
@@ -52,21 +63,26 @@ in
         name = "qutebrowser-hyprprofile";
         desktopName = "Qutebrowser Hyprprofile";
         exec = "qutebrowser-hyprprofile %u";
-        categories = ["Network" "WebBrowser"];
-        keywords = ["Browser"];
+        categories = [
+          "Network"
+          "WebBrowser"
+        ];
+        keywords = [ "Browser" ];
         terminal = false;
         type = "Application";
         noDisplay = false;
         icon = "qutebrowser";
       })
     ];
-    xdg.mimeApps.defaultApplications = lib.mkIf qutebrowserDefault (lib.mkForce {
-      "text/html" = "qutebrowser-hyprprofile.desktop";
-      "x-scheme-handler/http" = "qutebrowser-hyprprofile.desktop";
-      "x-scheme-handler/https" = "qutebrowser-hyprprofile.desktop";
-      "x-scheme-handler/about" = "qutebrowser-hyprprofile.desktop";
-      "x-scheme-handler/unknown" = "qutebrowser-hyprprofile.desktop";
-    });
+    xdg.mimeApps.defaultApplications = lib.mkIf qutebrowserDefault (
+      lib.mkForce {
+        "text/html" = "qutebrowser-hyprprofile.desktop";
+        "x-scheme-handler/http" = "qutebrowser-hyprprofile.desktop";
+        "x-scheme-handler/https" = "qutebrowser-hyprprofile.desktop";
+        "x-scheme-handler/about" = "qutebrowser-hyprprofile.desktop";
+        "x-scheme-handler/unknown" = "qutebrowser-hyprprofile.desktop";
+      }
+    );
     home.file.".config/hyprprofiles/" = {
       source = ./profiles;
       recursive = true;

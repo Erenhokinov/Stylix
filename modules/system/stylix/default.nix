@@ -1,8 +1,14 @@
-{ lib, config, pkgs, inputs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 let
   cfg = config.systemSettings.stylix;
-  theme = import (./. + "../../../themes"+("/"+config.systemSettings.stylix.theme));
+  theme = import (./. + "../../../themes" + ("/" + config.systemSettings.stylix.theme));
 in
 {
   options = {
@@ -11,7 +17,11 @@ in
     };
     systemSettings.stylix.theme = lib.mkOption {
       default = "orichalcum";
-      type = lib.types.enum (builtins.attrNames (lib.filterAttrs (name: type: type == "directory") (builtins.readDir ../../themes)));
+      type = lib.types.enum (
+        builtins.attrNames (
+          lib.filterAttrs (name: type: type == "directory") (builtins.readDir ../../themes)
+        )
+      );
       description = "Theme for stylix to use system wide. A list of themes can be found in the `themes` directory.";
     };
   };
@@ -23,8 +33,8 @@ in
     stylix.autoEnable = false;
     stylix.polarity = theme.polarity;
     stylix.image = pkgs.fetchurl {
-     url = theme.backgroundUrl;
-     sha256 = theme.backgroundSha256;
+      url = theme.backgroundUrl;
+      sha256 = theme.backgroundSha256;
     };
     stylix.base16Scheme = theme;
     stylix.fonts = {

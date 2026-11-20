@@ -1,8 +1,14 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.userSettings.shell;
-in {
+in
+{
   options = {
     userSettings.shell = {
       enable = lib.mkEnableOption "Enable fancy zsh with some necessary CLI utilities";
@@ -40,12 +46,12 @@ in {
         ",," = "comma-shell";
       };
       initContent = ''
-      PROMPT=" ◉ %U%F{magenta}%n%f%u@%U%F{blue}%m%f%u:%F{yellow}%~%f
-       %F{green}→%f "
-      RPROMPT="%F{red}▂%f%F{yellow}▄%f%F{green}▆%f%F{cyan}█%f%F{blue}▆%f%F{magenta}▄%f%F{white}▂%f"
-      [ $TERM = "dumb" ] && unsetopt zle && PS1='$ '
-      bindkey '^P' history-beginning-search-backward
-      bindkey '^N' history-beginning-search-forward
+        PROMPT=" ◉ %U%F{magenta}%n%f%u@%U%F{blue}%m%f%u:%F{yellow}%~%f
+         %F{green}→%f "
+        RPROMPT="%F{red}▂%f%F{yellow}▄%f%F{green}▆%f%F{cyan}█%f%F{blue}▆%f%F{magenta}▄%f%F{white}▂%f"
+        [ $TERM = "dumb" ] && unsetopt zle && PS1='$ '
+        bindkey '^P' history-beginning-search-backward
+        bindkey '^N' history-beginning-search-forward
       '';
     };
 
@@ -56,9 +62,17 @@ in {
     };
 
     home.packages = with pkgs; [
-      gnugrep gnused w3m
-      bat eza bottom fd bc
-      direnv nix-direnv devenv
+      gnugrep
+      gnused
+      w3m
+      bat
+      eza
+      bottom
+      fd
+      bc
+      direnv
+      nix-direnv
+      devenv
     ];
 
     programs.neovim = {
