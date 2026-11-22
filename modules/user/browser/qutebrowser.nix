@@ -208,16 +208,6 @@
       }
   );
 
-  yt-adblock = pkgs.fetchurl {
-    url = "https://update.greasyfork.org/scripts/533163/1580028/script.user.js";
-    hash = "sha256-5Uz49oyJ/yVLTrOAZWwNjtHApHqIXl6GYAUHqPkCX0c=";
-  };
-
-  sponsorblock-userscript = pkgs.fetchurl {
-    url = "https://raw.githubusercontent.com/mchangrh/sb.js/f833d10681ecdb10fd788f36e8c06a26319a3871/docs/sb.user.js";
-    hash = "sha256-nrQ4Fz8g4Odi9aa+tZB8gefF5w1xCCw/Ryg90Q4kJmM=";
-  };
-
   # qutebrowser routed to the NVIDIA dGPU (GTX 1650) for hardware video decode.
   # These PRIME offload vars are scoped to this wrapper ONLY — they must not be
   # global sessionVariables, or they force every EGL app (incl. Hyprland on the
@@ -586,9 +576,6 @@ in {
         c.fonts.web.family.fantasy = font
         c.fonts.web.family.cursive = font
       '';
-
-    home.file.".config/qutebrowser/greasemonkey/youtube-adblock.user.js".source = yt-adblock;
-    home.file.".config/qutebrowser/greasemonkey/sponsorblock.user.js".source = sponsorblock-userscript;
 
     home.file.".config/qutebrowser/containers".text = ''
       Gamedev

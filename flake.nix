@@ -4,6 +4,7 @@
   outputs = inputs @ {
     self,
     nix-flatpak,
+    alejandra,
     ...
   }: let
     system = "x86_64-linux";
@@ -103,23 +104,16 @@
     nixpkgs-stable.url = "nixpkgs/nixos-25.11";
     chaotic.url = "github:chaotic-cx/nyx";
     prismlauncher-cracked.url = "github:Diegiwg/PrismLauncher-Cracked";
-    rust-overlay.url = "github:oxalica/rust-overlay";
+    wayvibes.url = "github:sahaj-b/wayvibes";
     stylix.url = "github:nix-community/stylix";
     nix-devin-cli.url = "github:broady/nix-devin-cli";
     nixcord.url = "github:4evy/nixcord";
 
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
-
-    wayvibes = {
-      url = "github:sahaj-b/wayvibes";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    home-manager = {
-      url = "github:nix-community/home-manager/master";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    wayvibes.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager.url = "github:nix-community/home-manager/master";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     hyprland = {
       url = "github:hyprwm/Hyprland/v0.52.2";
@@ -146,6 +140,7 @@
       url = "github:kamadorueda/alejandra";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    rust-overlay.url = "github:oxalica/rust-overlay";
 
     blocklist-hosts = {
       url = "github:StevenBlack/hosts";
