@@ -30,7 +30,7 @@
       hyprland.enable = true;
 
       # dotfiles
-      dotfilesDir = "/etc/nixos";
+      dotfilesDir = "/etc/dotfiles";
 
       # security
       security = {
@@ -40,7 +40,7 @@
         firejail.enable = false; # TODO setup firejail profiles
         firewall.enable = true;
         gpg.enable = true;
-        openvpn.enable = true;
+        openvpn.enable = false;
         sshd.enable = false;
       };
 

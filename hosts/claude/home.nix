@@ -9,6 +9,12 @@
   transkun = pkgs.callPackage ../../pkgs/transkun.nix {};
   #  romannow = pkgs.callPackage ../../pkgs/Romanich.nix { };
   humidi = pkgs.callPackage ../../pkgs/humidi.nix {};
+  wayvibesAkkoLavenderPurples =
+    pkgs.callPackage
+    ../../pkgs/wayvibes-akko-lavender-purples.nix
+    {
+      wayvibesSoundpackSource = "${inputs.wayvibes}/soundpacks/akko_lavender_purples";
+    };
 in {
   imports = [
     inputs.nix-flatpak.homeManagerModules.nix-flatpak
@@ -71,6 +77,7 @@ in {
         appId = "org.vinegarhq.Sober";
         origin = "flathub";
       }
+
       #tralalelo tralala!
     ];
 
@@ -102,13 +109,12 @@ in {
 
     services.wayvibes = {
       enable = true;
-      soundpack = "${inputs.wayvibes}/soundpacks/akko_lavender_purples";
+      soundpack = "${wayvibesAkkoLavenderPurples}";
       volume = 2;
     };
 
-    systemd.user.services.wayvibes.Service.ExecStart = lib.mkForce ''
-      ${config.services.wayvibes.package}/bin/wayvibes ${config.services.wayvibes.soundpack} -v ${toString config.services.wayvibes.volume} --device-name "SEMICO   USB Gaming Keyboard "
-    '';
+    xdg.configFile."wayvibes/input_device".text = "PATH:/dev/input/by-id/usb-SEMICO_USB_Gaming_Keyboard-event-kbd";
+
     wayland.windowManager.hyprland = lib.mkIf config.userSettings.hyprland.enable {
       settings = {
         monitor = [

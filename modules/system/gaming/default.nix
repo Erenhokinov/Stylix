@@ -62,8 +62,8 @@ in {
     environment.systemPackages = with pkgs; [
       steam
       gamemode
-      prismlauncher
       inotify-tools
+      osu-lazer-bin
       protonup-qt
       (pkgs.writeScriptBin "steamgrab" "chown -R $(pgrep -nf steam | xargs -r ps -o uname= -p):steam /opt/Steam;")
       (pkgs.writeScriptBin "steamos-session-select" ''
