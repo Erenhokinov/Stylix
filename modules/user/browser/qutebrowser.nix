@@ -208,20 +208,6 @@
       }
   );
 
-  yt-adblock = pkgs.fetchurl {
-    url = "https://update.greasyfork.org/scripts/533163/1580028/script.user.js";
-    hash = "sha256-5Uz49oyJ/yVLTrOAZWwNjtHApHqIXl6GYAUHqPkCX0c=";
-  };
-
-  sponsorblock-userscript = pkgs.fetchurl {
-    url = "https://raw.githubusercontent.com/mchangrh/sb.js/f833d10681ecdb10fd788f36e8c06a26319a3871/docs/sb.user.js";
-    hash = "sha256-nrQ4Fz8g4Odi9aa+tZB8gefF5w1xCCw/Ryg90Q4kJmM=";
-  };
-
-  # qutebrowser routed to the NVIDIA dGPU (GTX 1650) for hardware video decode.
-  # These PRIME offload vars are scoped to this wrapper ONLY — they must not be
-  # global sessionVariables, or they force every EGL app (incl. Hyprland on the
-  # AMD iGPU) onto NVIDIA and crash GL init.
   qutebrowser-dgpu = pkgs.writeShellApplication {
     name = "qutebrowser";
     runtimeInputs = [pkgs-stable.qutebrowser];
@@ -263,7 +249,18 @@ in {
       (pkgs.callPackage qute-containers {})
     }/bin/containers_config";
 
-    programs.qutebrowser.enable = true;
+    programs.qutebrowser = {
+      enable = true;
+      greasemonkey = [
+        (pkgs.fetchurl {
+          url = "https://update.greasyfork.org/scripts/561432/EasyTube%20V5%20%E2%80%94%20YouTube%20Ad%20Skip%2C%20SponsorBlock%2C%20Force%204K%20%20HD%20Downloader.user.js";
+          sha256 = "0871d7ab9a952e99bc894f135ee4a4d282d37c0679cbe49e0ed8b4046e3bf750";
+        })
+        # C.A.A.S — checkers assistant for 247checkers.com (local file)
+        (pkgs.writeText "caas.user.js" (builtins.readFile ./caas/caas.user.js))
+      ];
+    };
+
     programs.qutebrowser.package = qutebrowser-dgpu;
     programs.qutebrowser.extraConfig =
       ''
@@ -586,9 +583,6 @@ in {
         c.fonts.web.family.fantasy = font
         c.fonts.web.family.cursive = font
       '';
-
-    home.file.".config/qutebrowser/greasemonkey/youtube-adblock.user.js".source = yt-adblock;
-    home.file.".config/qutebrowser/greasemonkey/sponsorblock.user.js".source = sponsorblock-userscript;
 
     home.file.".config/qutebrowser/containers".text = ''
       Gamedev
