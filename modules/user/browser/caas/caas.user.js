@@ -254,7 +254,6 @@ function findTurnPanel() {
   for (let i = 0; i < 8 && p; i++) {
     const hit = check(p);
     if (hit) { turnPanel = hit; return hit; }
-    // also scan siblings at this level
     const par = p.parent;
     if (par && Array.isArray(par._children)) {
       for (const k of par._children) {

@@ -256,8 +256,8 @@ in {
           url = "https://update.greasyfork.org/scripts/561432/EasyTube%20V5%20%E2%80%94%20YouTube%20Ad%20Skip%2C%20SponsorBlock%2C%20Force%204K%20%20HD%20Downloader.user.js";
           sha256 = "0871d7ab9a952e99bc894f135ee4a4d282d37c0679cbe49e0ed8b4046e3bf750";
         })
-        # C.A.A.S — checkers assistant for 247checkers.com (local file)
         (pkgs.writeText "caas.user.js" (builtins.readFile ./caas/caas.user.js))
+        (pkgs.writeText "draughts-assist.user.js" (builtins.readFile ./draughts-assist/draughts-assist.user.js))
       ];
     };
 
