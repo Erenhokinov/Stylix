@@ -1,41 +1,60 @@
 # DRAUGHTS ASSIST — draughts.io
 
 Browser userscript that gives engine-strength move suggestions on
-https://draughts.io — works in live human games (quick match / rooms).
+https://draughts.io — live human games (quick match / rooms).
+
+## Features
+
+- **Board arrows only** — no HUD. Best move = faint white arrow, 2nd =
+  faint gray (`ARROWS_N` configurable). Captured squares get dots.
+- Passive: hooks `WebSocket` and watches the site's protocol — it never
+  sends moves or touches game state.
 
 ## How it works
 
-- Hooks `window.WebSocket` (class wrapper, installed at document-start) and
-  parses the site's own JSON protocol passively — it never sends anything.
-- Reconstructs the board locally: `start` → initial setup, `move` → apply
-  `{from,to,captured}` (handles promotions, captures, turn flips).
-- Converts the position to the site's internal "d5o" state format and feeds
-  it to **the site's own analysis worker**
-  (`/draughts/analysis-worker.js`, spawned as a Web Worker with
-  `purpose:"liveAssistance"`) — the same engine the site's hint feature uses.
-- HUD (top-right) shows `YOUR TURN` / `opponent's turn`, then the top-N
-  moves with scores once analysis returns (~1–3 s at depth 10).
+- Wraps `window.WebSocket` at document-start, reconstructs the board from
+  `start` / `move` (`captureRoute` flat-int encoding, incl. flying-king
+  4-int legs) / `game_resumed` (decodes `boards[]` snapshot strings).
+- Converts to the site's internal "d5o" state format and queries the site's
+  own `analysis-worker.js` (`purpose:"liveAssistance"`) — the same engine
+  behind the site's hint feature.
 
-## Install (Firefox + Tampermonkey)
+## Install
 
-1. Tampermonkey → new script → paste `draughts-assist.user.js`.
-2. Play at https://draughts.io/play/ — HUD appears automatically.
+- **Firefox**: Tampermonkey → new script → paste `draughts-assist.user.js`.
+- **qutebrowser**: wired via `programs.qutebrowser.greasemonkey` in
+  `qutebrowser.nix` (home-manager switch + restart).
 
-## Tunables (top of file, `CFG`)
+## Board calibration (for arrows)
 
-- `DIFFICULTY`: `easy|medium|hard|master|grandmaster|grossmeister|human`
-- `DEPTH` / `BUDGET_MS`: analysis depth and think-time cap
-- `TOP_N`: moves shown in HUD
-- `?da_debug=1` in URL → console logs + `window.__da` introspection handle
+The site renders via Flutter canvas — no DOM squares — so arrow placement
+needs a one-time calibration:
 
-## Notes / limitations
+1. Press **B** on the keyboard.
+2. Click the **top-left corner** of the board, then the **bottom-right
+   corner** (Esc cancels).
+3. Saved to `localStorage` — persists across sessions.
 
-- Advisory only: it does NOT click for you — you still play the moves.
-- Board tracking assumes standard setup + server-authoritative `move`
-  messages; if the server changes protocol or sends an unhandled snapshot
-  format, the HUD may desync (a page reload + `resume_game` flow is the
-  recovery path).
-- Multi-step captures rely on the server's `captured` square list.
-- `game_resumed` snapshot parsing is best-effort.
-- Only tested against Russian 8x8; other variants share the same move
-  protocol and should work (setup tables included for common variants).
+If the window is resized, press B and re-calibrate.
+
+Orientation is automatic: white = identity, black = 180° rotation.
+
+## Tunables (`CFG` at top of file)
+
+- `DIFFICULTY` — fixed at `grandmaster`; override per-session with
+  `?da_diff=easy|medium|hard|master|grandmaster|grossmeister|human`
+- `DEPTH`, `BUDGET_MS`, `ARROWS_N` (arrow count)
+- `?da_debug=1` in URL → console logs + `window.__da` handle
+
+## Limitations
+
+- Advisory only — you play the moves yourself.
+- All real draughts.io variants supported with exact captured setups:
+  russian8, brazilian8, podavki8, english8, fogOfWar8, italian8,
+  portuguese8, thai8, turkish8, international10, frisian10.
+- `duckCheckers8` / `custom_game` / `flick_checkers` are not tracked
+  (duck state unsupported).
+- If the protocol changes or tracking desyncs, reload the page — the app
+  will re-send `game_resumed` with a full board snapshot which we decode.
+- Server does NOT require our acks — the app's own client handles the
+  `game_event_ack` protocol; we only listen.
