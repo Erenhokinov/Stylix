@@ -32,8 +32,8 @@
     ENGINE_URL: '/draughts/engine-worker.js',
     USE_ANALYSIS: true,          // analysis worker (multi-PV) vs engine worker (single best)
     DIFFICULTY: new URLSearchParams(location.search).get('da_diff') || 'grandmaster',
-    DEPTH: 10,                   // analysis depth (app uses 17 for hints w/ 300s budget)
-    BUDGET_MS: 3000,             // max think time per position
+    DEPTH: +(new URLSearchParams(location.search).get('da_depth') || 99),
+    BUDGET_MS: +(new URLSearchParams(location.search).get('da_budget') || 20000), // max think time per position
     DEBOUNCE_MS: 600,            // wait after last board change before analyzing
     POLL_MS: 500,
     ARROWS_N: 2,                 // how many candidate moves get arrows (1 = best only)
@@ -212,33 +212,15 @@
 
   function installWsHook() {
     const WS = window.WebSocket;
-    if (!WS || WS.__daPatched) return;
-    WS.__daPatched = true;
-    // Prototype-level patching: catches sockets created BEFORE this script ran
-    // (qutebrowser greasemonkey may inject late). Wraps 'message' listeners
-    // however the app registers them.
-    const tap = fn => function (ev) {
-      try { if (typeof ev.data === 'string') handleFrame(ev.data); } catch (e) {}
-      return fn.call(this, ev);
-    };
-    const origAdd = WS.prototype.addEventListener;
-    WS.prototype.addEventListener = function (type, fn, opts) {
-      if (type === 'message' && typeof fn === 'function')
-        return origAdd.call(this, type, tap(fn), opts);
-      return origAdd.call(this, type, fn, opts);
-    };
-    // trap `ws.onmessage = fn` assignments
-    const origAddMsg = origAdd;
-    try {
-      Object.defineProperty(WS.prototype, 'onmessage', {
-        configurable: true,
-        get() { return this.__daOnMsg; },
-        set(fn) {
-          this.__daOnMsg = fn;
-          if (typeof fn === 'function') origAddMsg.call(this, 'message', tap(fn));
-        },
-      });
-    } catch (e) {}
+    if (!WS || WS.__daWrapped) return;
+    class Wrapped extends WS {
+      constructor(...args) {
+        super(...args);
+        try { this.addEventListener('message', ev => { if (typeof ev.data === 'string') handleFrame(ev.data); }); } catch (e) {}
+      }
+    }
+    Wrapped.__daWrapped = true;
+    window.WebSocket = Wrapped;
   }
 
   // ==================== ENGINE STATE (d5o format) ====================
@@ -479,8 +461,10 @@
         clearTimeout(analyzeTimer); analyzeTimer = null;
       }
     }, CFG.POLL_MS);
-    console.log('[da] DRAUGHTS ASSIST loaded');
-    if (CFG.DEBUG) window.__da = { G, Eng, toEngineState, handleFrame };
+    if (CFG.DEBUG) {
+      console.log('[da] DRAUGHTS ASSIST loaded');
+      window.__da = { G, Eng, toEngineState, handleFrame };
+    }
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
